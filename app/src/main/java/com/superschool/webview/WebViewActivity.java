@@ -1,10 +1,13 @@
 package com.superschool.webview;
 
 import android.os.Build;
+import android.os.Environment;
+import android.os.storage.StorageManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,10 +19,12 @@ import com.superschool.R;
 public class WebViewActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    String url = "http://39.108.178.40/super/";
-
+    // String url="http://www.sinbel.top/super/test.html";
+    String url = "http://www.sinbel.top/super/";
+  //  String url = "file:///android_asset/test.html";
     private WebView webView;
-     private Button refresh;
+    private Button refresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,23 +33,33 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
-
-        refresh= (Button) findViewById(R.id.refresh);
+        refresh = (Button) findViewById(R.id.refresh);
         webView = (WebView) findViewById(R.id.web);
         webView.loadUrl(url);
-        WebSettings ws=webView.getSettings();
+        WebSettings ws = webView.getSettings();
         ws.setDomStorageEnabled(true);
-        ws.setAppCacheMaxSize(1024*1024*8);
+        ws.setAppCacheMaxSize(1024 * 1024 * 8);
 
-        ws.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+        ws.setDatabaseEnabled(true);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            ws.setDatabasePath("/data/data/" + webView.getContext().getPackageName() + "/databases/");
+        } else {
+            ws.setAppCachePath(Environment.getExternalStorageDirectory().getAbsolutePath());
+
+        }
         ws.setAllowFileAccess(true);
         ws.setAppCacheEnabled(true);
         ws.setJavaScriptEnabled(true);
 
 
-        System.out.println(getApplicationContext().getCacheDir().getAbsolutePath());
 
-        webView.setWebViewClient(new WebViewClient(){
+
+
+        webView.setWebChromeClient(new WebChromeClient() {
+
+
+        });
+        webView.setWebViewClient(new WebViewClient() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -59,7 +74,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==refresh.getId()){
+        if (view.getId() == refresh.getId()) {
             webView.reload();
 
         }

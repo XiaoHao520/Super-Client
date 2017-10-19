@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rDAZG3MbRf5qx47SGkTPML3bodrzvxH1"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    输入
+    <input id="input" type="text">
+
+    <button id="save" onclick="save()">保存</button>
+
+
+
+    <script type="text/javascript">
+
+        console.log("--------------------"+window.localStorage.getItem("name"));
+        //  var save = document.getElementById("save");
+        var input = document.getElementById("input");
+
+        function save() {
+            //  alert("hello wolrd");
+            window.localStorage.setItem("name", input.value);
+
+        }
+
+
+    </script>
+</body>
+
+</html>

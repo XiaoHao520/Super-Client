@@ -2,6 +2,7 @@ package com.superschool.fragments;
 
 import android.app.DownloadManager;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -38,8 +39,25 @@ public class FrameOne extends Fragment {
     private void initView() {
         webView = (WebView) view.findViewById(R.id.web);
         WebSettings ws = webView.getSettings();
+        ws.setDomStorageEnabled(true);
+        ws.setAppCacheMaxSize(1024 * 1024 * 8);
+
+        ws.setDatabaseEnabled(true);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            ws.setDatabasePath("/data/data/" + webView.getContext().getPackageName() + "/databases/");
+        } else {
+            ws.setAppCachePath(Environment.getExternalStorageDirectory().getAbsolutePath());
+
+        }
+        ws.setAllowFileAccess(true);
+        ws.setAppCacheEnabled(true);
         ws.setJavaScriptEnabled(true);
 
+
+        webView.setWebChromeClient(new WebChromeClient() {
+
+
+        });
         webView.setWebViewClient(new WebViewClient(){
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -49,6 +67,7 @@ public class FrameOne extends Fragment {
                 view.loadUrl(request.getUrl().getPath());
                 return true;
             }
+
         });
         webView.loadUrl(url);
     }

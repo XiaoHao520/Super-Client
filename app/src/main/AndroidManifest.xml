@@ -25,16 +25,16 @@
             android:value="472ffea7ddd9137561c90b929abe3e12" />
 
         <activity android:name=".MainActivity">
-
-        </activity>
-
-        <activity android:name=".activity.CardsActivity" />
-        <activity android:name=".webview.WebViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.CardsActivity" />
+        <activity android:name=".webview.WebViewActivity">
+
         </activity>
     </application>
 
