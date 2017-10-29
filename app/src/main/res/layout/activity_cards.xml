@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.superschool.activity.CardsActivity">
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/cardsListView"
-    ></ListView>
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:paddingLeft="15px"
+        android:paddingRight="15px"
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:background="@color/bg">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:layout_alignTop="@+id/textView"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="发表"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <EditText
+
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:layout_below="@+id/head"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px"
+        android:layout_marginTop="50px"
+        android:background="#e2dddd"
+        android:gravity="top"
+        android:hint="试试"
+        android:lines="20"
+        android:minHeight="300px"
+        android:padding="15px"
+        android:textAlignment="textStart"
+        android:textColor="#000"
+        android:textColorHint="#605e5e" />
+
+
+    <GridView
+        android:id="@+id/grid"
+        android:layout_width="800px"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0px"
+        android:layout_marginLeft="0px"
+        android:layout_marginRight="0px"
+        android:layout_marginTop="100px"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:verticalSpacing="5dp"></GridView>
+
+</RelativeLayout>

@@ -20,131 +20,127 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <com.superschool.customeview.MyViewpager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"></com.superschool.customeview.MyViewpager>
-        <LinearLayout
-            android:id="@+id/guide"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="250px"
-            android:background="#ffffff"
 
-            android:textAlignment="center"
-
-            android:layout_weight="1">
-
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/guide"
+                android:layout_width="match_parent"
+                android:layout_height="250px"
                 android:layout_weight="1"
+                android:background="#ffffff"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal"
 
-                <ImageView
-                    android:layout_width="80px"
-                    android:layout_height="80px"
-                    android:id="@+id/schoolImg"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="0px"
-                    android:padding="0px"
-                    android:src="@drawable/schoolactived"
-                    />
-                <TextView
+                android:textAlignment="center">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/schoolImg"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="0px"
+                        android:padding="0px"
+                        android:src="@drawable/schoolactived" />
+
+                    <TextView
+                        android:id="@+id/f1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/schoolImg"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="0px"
+                        android:padding="0px"
+                        android:text="校园"
+                        android:textAlignment="center"
+                        android:textColor="#FE4080"
+                        android:textSize="11sp"
+
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/f1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="0px"
-                    android:padding="0px"
-                    android:text="校园"
-                    android:layout_below="@id/schoolImg"
-                    android:textAlignment="center"
-                    android:textColor="#FE4080"
-                    android:textSize="11sp"
-
-                    />
+                    android:layout_weight="1"
 
 
+                    >
+
+                    <ImageView
+                        android:id="@+id/newsImg"
+                        android:layout_width="65px"
+
+                        android:layout_height="65px"
+
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+
+                        android:padding="0px"
+                        android:src="@drawable/news" />
+
+                    <TextView
+                        android:id="@+id/f2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@id/newsImg"
+                        android:layout_centerHorizontal="true"
+                        android:text="附近动态"
+                        android:textAlignment="center"
+                        android:textSize="11sp"
 
 
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                        />
 
 
-                >
+                </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="65px"
-                    android:layout_height="65px"
 
-                    android:id="@+id/newsImg"
-
-                    android:padding="0px"
-                    android:src="@drawable/news"
-
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/f2"
-
-                    android:layout_below="@id/newsImg"
-                    android:layout_centerHorizontal="true"
-                    android:text="附近动态"
-                    android:textAlignment="center"
-                    android:textSize="11sp"
 
 
-                    />
+                    android:layout_weight="1">
 
+                    <ImageView
+                        android:id="@+id/meImg"
 
+                        android:layout_width="65px"
+                        android:layout_height="65px"
 
-            </RelativeLayout>
+                        android:layout_centerHorizontal="true"
 
+                        android:layout_margin="0px"
+                        android:padding="0px"
 
+                        android:src="@drawable/user" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/f3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/meImg"
+                        android:layout_centerHorizontal="true"
+                        android:text="me"
+                        android:textAlignment="center"
+                        android:textSize="11sp" />
 
-
-                android:layout_weight="1"
-                >
-
-                <ImageView
-                    android:layout_width="65px"
-
-                    android:padding="0px"
-                    android:src="@drawable/user"
-
-                    android:id="@+id/meImg"
-
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="0px"
-
-                    android:layout_height="65px" />
-
-                <TextView
-                    android:id="@+id/f3"
-                    android:layout_below="@id/meImg"
-                    android:layout_centerHorizontal="true"
-                    android:text="me"
-                    android:textAlignment="center"
-                    android:textSize="11sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
-        </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
 

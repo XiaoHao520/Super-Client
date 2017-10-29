@@ -3,6 +3,7 @@ package com.superschool.fragments;
 import android.app.DownloadManager;
 import android.os.Build;
 import android.os.Environment;
+
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -69,6 +70,6 @@ public class FrameOne extends Fragment {
             }
 
         });
-        webView.loadUrl(url);
+      //  webView.loadUrl(url);
     }
 }

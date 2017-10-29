@@ -1,11 +1,10 @@
 package com.superschool.webview;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
-import android.os.storage.StorageManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;

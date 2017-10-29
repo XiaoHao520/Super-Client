@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="0px">
-<WebView
 
-    android:id="@+id/web"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <WebView
+
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-</WebView>
+    </WebView>
 </LinearLayout>
