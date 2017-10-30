@@ -34,13 +34,14 @@ import java.util.logging.SimpleFormatter;
 super-1252119503.cos.ap-guangzhou.myqcloud.com
 super-1252119503.cos.guangzhou.myqcloud.com*/
 public class FileUpload {
+   private static String buket="super";
     private static String appid = "1252119503";
     private static String region = "ap-guangzhou";
     private static String secretId = "AKID30lLo6m6qQo00pf1WqyufFcnmZ9XigV8";
     private static String secretKey = "Yt43ua5OVdhaHl4B7qNkwgIix1wfDZSP";
+    private static List<String>cosUrls;
 
-
-    public static void uploadSingle(String filepath, Context context) throws Exception {
+    public static String uploadSingle(String filepath, Context context) throws Exception {
         Date date;
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         date = new Date();
@@ -69,7 +70,7 @@ public class FileUpload {
                 Log.w("TEST", "progress =" + (long) result + "%");
             }
         });
-        System.out.println("----------------------------------------");
+
 //使用同步方法上传
         try {
             final PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
@@ -89,31 +90,11 @@ public class FileUpload {
             if (putObjectResult.getHttpCode() >= 200 && putObjectResult.getHttpCode() < 300) {
                 //上传成功后，则可以拼接访问此文件的地址，格式为：bucket-appid.region.myqcloud.com.cosPath;
 
+                String url="http://"+buket+"-"+appid+".cosgz.myqcloud.com/"+cosName;
                 Log.w("TEST", "accessUrl =" + putObjectResult.accessUrl);
+
+                  return url;
             }
-/*
-             cosXmlService.putObjectAsync(putObjectRequest, new CosXmlResultListener() {
-            @Override
-            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
-                Log.w("TEST","accessUrl =" + result.accessUrl);
-
-
-
-
-            }
-
-            @Override
-            public void onFail(CosXmlRequest request, CosXmlResult result) {
-                StringBuilder stringBuilder = new StringBuilder("Error\n");
-                stringBuilder.append(putObjectResult.error.code)
-                        .append(putObjectResult.error.message)
-                        .append(putObjectResult.error.resource)
-                        .append(putObjectResult.error.requestId)
-                        .append(putObjectResult.error.traceId);
-                Log.w("TEST",stringBuilder.toString());
-            }
-        });
-*/
 
         } catch (QCloudException e) {
 
@@ -121,6 +102,8 @@ public class FileUpload {
             Log.w("TEST", "exception =" + e.getExceptionType() + "; " + e.getDetailMessage());
         }
 
+
+        return  null;
     }
 
 
@@ -131,13 +114,13 @@ public class FileUpload {
 */
 
 
-    public static void uploadMulti(ArrayList<String> files, Context context) throws Exception {
-
+    public static List<String> uploadMulti(ArrayList<String> files, Context context) throws Exception {
+        cosUrls=new ArrayList<String>();
         for (int i = 0; i < files.size(); i++) {
-            uploadSingle(files.get(i), context);
+            cosUrls.add(uploadSingle(files.get(i), context));
         }
 
+        return cosUrls;
+
     }
-
-
 }

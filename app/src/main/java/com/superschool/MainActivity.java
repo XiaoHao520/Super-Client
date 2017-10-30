@@ -20,6 +20,8 @@ import com.superschool.fragments.FrameTwo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView school;
@@ -34,8 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        initJM();
         initView();
 
+    }
+
+    private void initJM() {
+        JMessageClient.init(getApplicationContext());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

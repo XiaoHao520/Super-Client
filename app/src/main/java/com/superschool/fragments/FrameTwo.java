@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.superschool.activity.CardsActivity;
@@ -90,7 +91,17 @@ public class FrameTwo extends Fragment {
         public void run() {
 
             try {
-                FileUpload.uploadMulti(photos,getContext());
+                List <String> cosUrls=FileUpload.uploadMulti(photos,getContext());
+                StringBuilder stringBuilder=new StringBuilder();
+                for (int i = 0; i <cosUrls.size() ; i++) {
+                    String url=cosUrls.get(i);
+                    if(url!=null) {
+                        stringBuilder.append(url + "%");
+                    }
+                }
+
+                System.out.println(stringBuilder.toString());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets{
+        main{
+            jniLibs.srcDirs=['libs']
+        }
+    }
 }
 
 dependencies {
@@ -32,7 +37,6 @@ dependencies {
     compile files('libs/volley.jar')
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:22.0.0'
-
     compile files('libs/cos-xml-android-sdk-1.0.jar')
     compile files('libs/okio-1.13.0.jar')
     compile files('libs/fastjson-1.1.60.android.jar')
@@ -40,4 +44,6 @@ dependencies {
     compile files('libs/qcloud-network-android-sdk-1.0.jar')
     compile files('libs/slf4j-android-1.6.1-RC1.jar')
     compile files('libs/xstream-1.4.7.jar')
+    compile files('libs/jmessage-android_v2.3.0.jar')
+    compile files('libs/jcore-android-1.1.7.jar')
 }
