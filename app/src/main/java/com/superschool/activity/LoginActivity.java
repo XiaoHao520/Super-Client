@@ -77,15 +77,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("username", json.get("username").toString());
 
         editor.putString("nickname", json.get("user_nickname").toString());
-        editor.putString("userid",json.get("user_id").toString());
-        if(json.get("user_school").equals(null)){
-            //editor.putString("userSchool", null);
-        }else {
+        editor.putString("userid", json.get("user_id").toString());
+        if (json.get("user_school") == null) {
+            editor.putString("userSchool", null);
+        } else {
             editor.putString("userSchool", json.get("user_school").toString());
         }
         editor.commit();
 
-       this.finish();
+        this.finish();
     }
 
     public void gotoFail() {

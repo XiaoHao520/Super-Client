@@ -64,12 +64,14 @@ public class MOkHttp {
     }
 
     public void sendNote(Note note,String url) throws IOException {
+
+
         RequestBody body = new FormBody.Builder().add("userid", note.getUserId()).add("date", note.getDate())
                 .add("content",note.getContent()).add("images",note.getImages()).build();
         Request request=new Request.Builder().url(url).post(body).build();
         Call call=okHttpClient.newCall(request);
         Response response=call.execute();
-
+        System.out.println("返回"+response.body().string());
 
     }
 }

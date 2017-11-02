@@ -1,9 +1,12 @@
 package com.superschool.fragments;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +27,9 @@ import com.superschool.R;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -33,6 +38,8 @@ import com.superschool.entity.Note;
 import com.superschool.tools.FileUpload;
 import com.superschool.tools.LruImageCache;
 import com.superschool.tools.MOkHttp;
+
+import static android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
 
 /**
  * Created by xiaohao on 17-10-16.
@@ -58,6 +65,7 @@ public class FrameTwo extends Fragment {
         web = (WebView) view.findViewById(R.id.web);
         WebSettings ws = web.getSettings();
         ws.setJavaScriptEnabled(true);
+        ws.setCacheMode(MIXED_CONTENT_ALWAYS_ALLOW);
         ws.setJavaScriptEnabled(true);
         web.addJavascriptInterface(new JsCall(), "jsCall");
         web.loadUrl(url);
@@ -81,9 +89,13 @@ public class FrameTwo extends Fragment {
             String userId=sharedPreferences.getString("userid",null);
             Note note=new Note();
             note.setUserId(userId);
+            SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+
+            Date date=new Date();
+            note.setDate(format.format(date));
+
+            System.out.println("userid:============"+userId);
             note.setContent(data.getStringExtra("content"));
-
-
             ArrayList<String> photos = data.getStringArrayListExtra("photos");
             FileRunnable fileRunnable = new FileRunnable(photos,note);
             new Thread(fileRunnable).start();
