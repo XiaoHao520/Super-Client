@@ -87,4 +87,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             vp.setCurrentItem(1);
         }
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("onrestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("pause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("onresume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("onstop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("ondestory");
+    }
 }

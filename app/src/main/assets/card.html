@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>card</title>
+    <link href="//h5.sinaimg.cn" rel="dns-prefetch">
+    <link href="//h5.sinaimg.cn/upload/2015/05/15/28/WeiboLogoCh.svg" rel="icon" color="black" sizes="any" mask="">
+    <link href="https://h5.sinaimg.cn/upload/2017/03/16/16/icon.png" rel="apple-touch-icon">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="theme-color" content="#F3F3F3">
+    <link href="//h5.sinaimg.cn/marvel/v1.3.1/css/lib/base.css" rel="stylesheet">
+    <link href="//h5.sinaimg.cn/marvel/v1.3.1/css/card/cards.css" rel="stylesheet">
+    <script>!function (e) {
+        var a, i = navigator.userAgent.toLowerCase(), n = document.documentElement, t = parseInt(n.clientWidth);
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) || i.indexOf("like mac os x") > 0) {
+            var s = /os [\d._]*/gi, o = i.match(s);
+            a = (o + "").replace(/[^0-9|_.]/gi, "").replace(/_/gi, ".")
+        }
+        var r = a + "";
+        "undefined" != r && r.length > 0 && (a = parseInt(r), a >= 8 && (375 == t || 667 == t || 320 == t || 568 == t || 480 == t) ? n.className = "iosx2" : (a >= 8 && 414 == t || 736 == t) && (n.className = "iosx3")), /(Android)/i.test(navigator.userAgent) && (n.className = "android")
+    }(window);</script>
+    <style>html, body, #app {
+        height: 100%;
+    }
+
+    [v-cloak] {
+        display: none;
+    }</style>
+    <link href="//h5.sinaimg.cn/m/v8/css/app.76153f4f.css" rel="stylesheet">
+    <script src="//h5.sinaimg.cn/m/v8/js/2.46828f57.js" type="text/javascript" charset="utf-8" async=""></script>
+    <style type="text/css">.pop-layer[data-v-a54e61e2] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: #000;
+        z-index: 999
+    }
+
+    .pop-layer .msg-tip[data-v-a54e61e2] {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+        height: 100%;
+        background: #000
+    }
+
+    .pop-layer .msg-tip span[data-v-a54e61e2] {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        text-align: center;
+        color: #fff;
+        font-size: 1rem;
+        line-height: 1rem
+    }
+
+    .pop-layer .pop-btns[data-v-a54e61e2] {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1003;
+        text-align: right
+    }
+
+    .pop-layer .pop-btns .pop-close[data-v-a54e61e2] {
+        color: #fff;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        display: inline-block;
+        margin: .5rem
+    }
+
+    .pop-layer video[data-v-a54e61e2] {
+        max-width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%)
+    }
+
+    .video-canplay video[data-v-a54e61e2] {
+        z-index: 1002
+    }</style>
+    <style type="text/css">div[data-v-17c4bdf2] {
+        margin: 1rem auto
+    }</style>
+
+    <style type="text/css">.profile-cover {
+        position: relative;
+        height: 11.25rem;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        text-align: center
+    }
+
+    .mod-fil-img {
+        padding-top: .625rem
+    }
+
+    .mod-fil-img span.m-img-box > .m-icon {
+        right: .25rem;
+        bottom: .25rem
+    }
+
+    .mod-fil-img span {
+        display: inline-block;
+        padding: .25rem;
+        background-color: hsla(0, 0%, 100%, .4)
+    }
+
+    .mod-fil-img span, .mod-fil-img span img {
+        border-radius: 999px;
+        border-radius: 50%;
+        width: 4.375rem;
+        height: 4.375rem
+    }
+
+    .mod-fil-name {
+        padding: .625rem 0;
+        font-size: 0
+    }
+
+    .mod-fil-n {
+        font-size: 0;
+        margin-right: .3125rem
+    }
+
+    .mod-fil-n span {
+        display: inline-block
+    }
+
+    .mod-fil-fans div, .mod-fil-name a {
+        color: #fff;
+        display: inline-block
+    }
+
+    .mod-fil-name a {
+        display: inline-block
+    }
+
+    .mod-fil-name a, .mod-fil-name a .m-icon {
+        vertical-align: middle
+    }
+
+    .mod-fil-n .txt-shadow {
+        font-size: 1.125rem;
+        vertical-align: middle;
+        margin-right: .3125rem
+    }
+
+    .mod-fil-fans {
+        line-height: 1.125rem;
+        font-size: 0
+    }
+
+    .mod-fil-fans div {
+        font-size: .75rem
+    }
+
+    .txt-shadow {
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, .5)
+    }
+
+    .mod-fil-fans span {
+        font-family: Arial;
+        margin-left: .3125rem
+    }
+
+    .mod-fil-fans div {
+        position: relative
+    }
+
+    .mod-fil-fans div:last-child {
+        padding-left: .625rem;
+        margin-left: .625rem
+    }
+
+    .mod-fil-fans div:last-child:before {
+        content: "";
+        width: 100%;
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 0;
+        border-left: 1px solid hsla(0, 0%, 100%, .3)
+    }
+
+    .mod-fil-desc {
+        padding: 0 .75rem;
+        line-height: 1.125rem;
+        font-size: .75rem;
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, .5)
+    }
+
+    .mod-nav {
+        background-color: #f7f7f7
+    }
+
+    .mod-nav-box {
+        width: 11rem;
+        margin: 0 auto;
+        position: relative
+    }
+
+    .mod-nav a {
+        text-align: center;
+        font-size: .9375rem;
+        display: block;
+        line-height: 2.1875rem;
+        padding-bottom: .125rem;
+        color: #5d5d5d
+    }
+
+    .mod-nav-box .box-col {
+        width: 33.33%
+    }
+
+    .mod-nav-line {
+        width: 33.33%;
+        height: 2px;
+        background-color: orange;
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -1px
+    }
+
+    .mod-nav-fixed {
+        position: fixed;
+        top: 2.75rem;
+        left: 0;
+        right: 0
+    }
+
+    .overlay {
+        opacity: .7;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, rgba(0, 0, 0, .01)), to(rgba(0, 0, 0, .95)));
+        background: linear-gradient(180deg, rgba(0, 0, 0, .01) 40%, rgba(0, 0, 0, .95))
+    }</style>
+    <style type="text/css"></style>
+    <style type="text/css">.m-top-nav.fixed[data-v-79ad1edf] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0
+    }
+
+    .m-top-nav-wrapper[data-v-79ad1edf] {
+        height: 2.3125rem
+    }
+
+    .m-top-nav-wrapper.hide[data-v-79ad1edf] {
+        height: 0
+    }
+
+    .m-top-nav[data-v-79ad1edf] {
+        position: relative;
+        margin-bottom: 1rem
+    }</style>
+    <style type="text/css">.m-pop[data-v-5cc9a808] {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%)
+    }
+
+    .fadeInDown-enter-active[data-v-5cc9a808], .fadeInDown-leave-active[data-v-5cc9a808] {
+        -webkit-transition: all .3s;
+        transition: all .3s
+    }
+
+    .fadeInDown-enter[data-v-5cc9a808], .fadeInDown-leave-active[data-v-5cc9a808] {
+        opacity: 0
+    }
+
+    .fadeInDown-enter[data-v-5cc9a808] {
+        -webkit-transform: translate(-50%, -60%);
+        transform: translate(-50%, -60%)
+    }
+
+    .fadeInDown-leave-active[data-v-5cc9a808] {
+        -webkit-transform: translate(-50%, -40%);
+        transform: translate(-50%, -40%)
+    }
+
+    .gp-list[data-v-5cc9a808] {
+        -webkit-transition: all .5s;
+        transition: all .5s
+    }</style>
+    <style type="text/css">.tips[data-v-72b039ae] {
+        position: fixed;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 999
+    }
+
+    .btn[data-v-72b039ae] {
+        display: inline-block;
+        width: 7.75rem;
+        line-height: 2.0625rem;
+        text-align: center;
+        border: 1px solid #fd993c;
+        font-size: 1rem;
+        vertical-align: middle;
+        border-radius: 7.5rem;
+        -webkit-box-shadow: 0 4px 9px 0 hsla(29, 25%, 53%, .38);
+        box-shadow: 0 4px 9px 0 hsla(29, 25%, 53%, .38);
+        background: #fd993c;
+        background-clip: padding-box;
+        color: #fff
+    }
+
+    .btn[data-v-72b039ae]:hover {
+        background-color: #fe8503
+    }
+
+    .btn[data-v-72b039ae] {
+        -webkit-animation: fadeInUp .5s ease-in-out both
+    }
+
+    @-webkit-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(1.75rem);
+            transform: translateY(1.75rem)
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+        }
+    }</style>
+
+    <style type="text/css">
+        .card9 .weibo-main .weibo-media .single-img {
+            position: relative;
+            max-width: 9.375rem;
+            max-height: 9.375rem;
+            overflow: hidden
+        }
+
+        .card9 .weibo-main .weibo-media .single-img > img {
+            width: 100%
+        }
+
+        .card9 .weibo-main .media-b .m-auto-list {
+            max-width: 100%
+        }
+
+        @media screen and (min-width: 750px) {
+            .card9 .weibo-main .m-auto-list, .card9 .weibo-main .media-b .m-auto-list {
+                max-width: 400px
+            }
+        }</style>
+    <style type="text/css"></style>
+    <style type="text/css">.m-auto-list .m-auto-box1[data-v-3a6c5646] {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0
+    }
+
+    .m-imghold-16-9[data-v-3a6c5646] {
+        padding-bottom: 56.25%;
+        border: 1px solid rgba(0, 0, 0, .05);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .f-bg-img[data-v-3a6c5646] {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        position: absolute;
+        width: 100%;
+        height: 100%
+    }
+
+    .m-btn-round[data-v-3a6c5646] {
+        position: absolute;
+        z-index: 9;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        font-size: 4.2rem
+    }</style>
+    <style type="text/css">.card9 .card .card-main > .m-box > .m-box-col[data-v-35aef476] {
+        margin-left: 0
+    }
+
+    #newest {
+
+        width: 100%;
+        height: 200px;
+        background-color: #ff81ae;
+    }
+
+        #more{
+            position: relative;
+
+            bottom: 0;
+        }
+
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+</head>
+<body id="body">
+
+<div id="newest">
+    最新的帖子
+</div>
+<div id="app">
+    <div class="card m-panel card9" v-for="item in list">
+        <div class="card-wrap">
+            <div class="card-main"><!---->
+                <header class="weibo-top m-box m-avatar-box"><a class="m-img-box"><img
+                        v-bind:src="item.user_header">
+                    <!----></a>
+                    <div class="m-box-col m-box-dir m-box-center">
+                        <div class="m-text-box"><a><h3 class="m-text-cut">{{item.user_nickname}}
+                            <!----></h3></a> <h4 class="m-text-cut"><span class="time">{{item.note_date}}</span> <span
+                                class="from"> 来自 {{item.note_school}}</span></h4></div>
+                    </div> <!----></header>
+                <article class="weibo-main">
+                    <div class="weibo-og">
+                        <div class="weibo-text">
+                            {{item.note_content_text}}
+                            ​​​
+                        </div>
+                        <div>
+                            <div class="weibo-media-wraps weibo-media media-b">
+                                <ul class="m-auto-list">
+                                    <div v-if="item[0].images!='undefined'">
+                                        <li class="m-auto-box" v-for="image in item[0].images">
+
+                                            <div class="m-img-box m-imghold-square"><img
+                                                    v-bind:src="image.image_path">
+                                            </div>
+                                        </li>
+                                    </div>
+
+                                </ul> <!----></div>
+                        </div>
+                    </div> <!----></article>
+                <footer class="m-ctrl-box m-box-center-a">
+                    <div class="m-diy-btn m-box-col m-box-center m-box-center-a"><i class="m-font m-font-forward"></i>
+                        <h4>转发</h4></div>
+                    <span class="m-line-gradient"></span>
+                    <div class="m-diy-btn m-box-col m-box-center m-box-center-a"><i class="m-font m-font-comment"></i>
+                        <h4>评论</h4></div>
+                    <span class="m-line-gradient"></span>
+                    <div class="m-diy-btn m-box-col m-box-center m-box-center-a"><i class="m-icon m-icon-like"></i>
+                        <h4>赞</h4></div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="color:#f2f6f4;text-align: center;width: 80px;height: 80px;line-height: 80px;background-color: #ff81ae;border-radius: 50%;position: fixed;bottom: 30px;right: 30px;font-size: 80px"
+     onclick="window.jsCall.makeNote()">+
+</div>
+<div id="more"
+     style="line-height: 40px;text-align: center;width: 100%;height: 40px;color: #5f5f5f;font-size: 15px;font-weight: 100">
+    更多
+</div>
+</body>
+
+<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+    var done = true;
+    var nStart = 0;
+    $(document).ready(function () {
+        $("#more").click(more);
+        $(window).scroll(function () {
+            if ($(document).scrollTop() <= 0) {
+                console.log($(document).scrollTop());
+
+                //document.location.reload();
+            }
+
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                console.log("到达底部");
+
+                nStart += 5;
+                loadData();
+
+                console.log(nStart);
+                // more();
+
+            }
+        });
+
+
+    })
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            list: [],
+            start: nStart
+        },
+        mounted: function () {
+            this.$http.get('http://39.108.178.40/study/public/index.php/vue/index/index?start=' + this.start).then(function (rs) {
+                var json = eval(rs.bodyText);
+
+                json = eval(json);
+
+                console.log(json);
+                for (var i = 0; i < json.length; i++) {
+
+                    if (json[i][0].images[0] != 'undefined') {
+                        this.list.push(json[i]);
+                    }
+                }
+
+                console.log(this.list.length)
+            })
+        }, watch: {
+            start: function (val) {
+                console.log(val);
+            }
+        }
+    });
+
+
+    function loadData(){
+       var url='http://39.108.178.40/study/public/index.php/vue/index/index?start=' + nStart;
+       console.log(url);
+        vm.$http.get(url).then(function (rs) {
+            var json = eval(rs.bodyText);
+
+            json = eval(json);
+
+            console.log(json);
+            for (var i = 0; i < json.length; i++) {
+
+                if (json[i][0].images[0] != 'undefined') {
+                    vm.list.push(json[i]);
+                }
+            }
+            console.log(vm.list.length)
+        })
+    }
+
+
+
+</script>
+</html>

@@ -1,6 +1,8 @@
 package com.superschool.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -38,6 +40,7 @@ public class FrameTwo extends Fragment {
     private WebView web;
     private com.android.volley.toolbox.NetworkImageView iv;
     private String url = "http://www.sinbel.top/study/public/index.php/mobile/index/index";
+    //  private String url="file:///android_asset/card.html";
     private static final int MAKE_NOTE = 1;
     View view;
 
@@ -54,35 +57,39 @@ public class FrameTwo extends Fragment {
         WebSettings ws = web.getSettings();
         ws.setJavaScriptEnabled(true);
         ws.setJavaScriptEnabled(true);
-        web.addJavascriptInterface(new JsCall(),"jsCall");
+        web.addJavascriptInterface(new JsCall(), "jsCall");
         web.loadUrl(url);
     }
 
-    class JsCall{
+    class JsCall {
 
         @JavascriptInterface
-        public void makeNote(){
-            Intent intent=new Intent(getActivity(), CardsActivity.class);
-            startActivityForResult(intent,MAKE_NOTE);
+        public void makeNote() {
+            Intent intent = new Intent(getActivity(), CardsActivity.class);
+            startActivityForResult(intent, MAKE_NOTE);
         }
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-         if(requestCode==1&&resultCode==1){
-             //获取返回的数据
-             System.out.println(data.getStringExtra("content"));
-             ArrayList<String> photos=data.getStringArrayListExtra("photos");
-              FileRunnable fileRunnable=new FileRunnable(photos);
-             new Thread(fileRunnable).start();
+        if (requestCode == 1 && resultCode == 1) {
+            //获取返回的数据
+            SharedPreferences sharedPreferences=getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
+            String nickname=sharedPreferences.getString("nickname",null);
+            System.out.println(nickname);
+            System.out.println(data.getStringExtra("content"));
+            ArrayList<String> photos = data.getStringArrayListExtra("photos");
+            FileRunnable fileRunnable = new FileRunnable(photos);
+            new Thread(fileRunnable).start();
 
-         }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    class FileRunnable implements Runnable{
+    class FileRunnable implements Runnable {
         private ArrayList<String> photos;
+
         public FileRunnable(ArrayList<String> photos) {
             this.photos = photos;
         }
@@ -91,11 +98,11 @@ public class FrameTwo extends Fragment {
         public void run() {
 
             try {
-                List <String> cosUrls=FileUpload.uploadMulti(photos,getContext());
-                StringBuilder stringBuilder=new StringBuilder();
-                for (int i = 0; i <cosUrls.size() ; i++) {
-                    String url=cosUrls.get(i);
-                    if(url!=null) {
+                List<String> cosUrls = FileUpload.uploadMulti(photos, getContext());
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < cosUrls.size(); i++) {
+                    String url = cosUrls.get(i);
+                    if (url != null) {
                         stringBuilder.append(url + "%");
                     }
                 }

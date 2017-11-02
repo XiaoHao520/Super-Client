@@ -41,6 +41,11 @@ public class FileUpload {
     private static String secretKey = "Yt43ua5OVdhaHl4B7qNkwgIix1wfDZSP";
     private static List<String>cosUrls;
 
+
+
+
+
+
     public static String uploadSingle(String filepath, Context context) throws Exception {
         Date date;
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");

@@ -151,7 +151,6 @@ public class CardsActivity extends AppCompatActivity implements View.OnClickList
                 for (PhotoInfo photo : photos) {
                     photoInfoList.add(photoInfoList.size() - 1, photo);
                 }
-
                 adapter.notifyDataSetChanged();
             }
             System.out.println(photoInfoList.size());

@@ -67,6 +67,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -111,15 +112,22 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CardsActivity"></activity>
-        <activity android:name=".webview.WebViewActivity"></activity>
+        <activity android:name=".activity.CardsActivity" />
+        <activity android:name=".webview.WebViewActivity" />
         <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:name=".activity.RegisterActivity"
+            android:label="@string/title_activity_register">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>
