@@ -1,5 +1,6 @@
 package com.superschool.tools;
 
+import com.superschool.entity.Note;
 import com.superschool.entity.User;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class MOkHttp {
                 .add("email", user.getUserEmail())
                 .add("password", user.getUserPassword())
                 .add("userid", user.getUserId())
-                .add("userHeader",user.getUserHeader()).build();
+                .add("userHeader", user.getUserHeader()).build();
         Request request = new Request.Builder().url(url).post(body).build();
         Call call = okHttpClient.newCall(request);
         try {
@@ -60,5 +61,15 @@ public class MOkHttp {
 
 
         return null;
+    }
+
+    public void sendNote(Note note,String url) throws IOException {
+        RequestBody body = new FormBody.Builder().add("userid", note.getUserId()).add("date", note.getDate())
+                .add("content",note.getContent()).add("images",note.getImages()).build();
+        Request request=new Request.Builder().url(url).post(body).build();
+        Call call=okHttpClient.newCall(request);
+        Response response=call.execute();
+
+
     }
 }

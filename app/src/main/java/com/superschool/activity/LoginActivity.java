@@ -70,20 +70,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         System.out.println("登录成功");
         System.out.println(json.get("username"));
-/*        SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
 
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", json.get("username").toString());
 
         editor.putString("nickname", json.get("user_nickname").toString());
-
+        editor.putString("userid",json.get("user_id").toString());
         if(json.get("user_school").equals(null)){
             //editor.putString("userSchool", null);
         }else {
             editor.putString("userSchool", json.get("user_school").toString());
         }
-        editor.commit();*/
+        editor.commit();
 
        this.finish();
     }

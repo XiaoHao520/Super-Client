@@ -29,8 +29,10 @@ import java.util.List;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.superschool.activity.CardsActivity;
+import com.superschool.entity.Note;
 import com.superschool.tools.FileUpload;
 import com.superschool.tools.LruImageCache;
+import com.superschool.tools.MOkHttp;
 
 /**
  * Created by xiaohao on 17-10-16.
@@ -76,11 +78,14 @@ public class FrameTwo extends Fragment {
         if (requestCode == 1 && resultCode == 1) {
             //获取返回的数据
             SharedPreferences sharedPreferences=getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
-            String nickname=sharedPreferences.getString("nickname",null);
-            System.out.println(nickname);
-            System.out.println(data.getStringExtra("content"));
+            String userId=sharedPreferences.getString("userid",null);
+            Note note=new Note();
+            note.setUserId(userId);
+            note.setContent(data.getStringExtra("content"));
+
+
             ArrayList<String> photos = data.getStringArrayListExtra("photos");
-            FileRunnable fileRunnable = new FileRunnable(photos);
+            FileRunnable fileRunnable = new FileRunnable(photos,note);
             new Thread(fileRunnable).start();
 
         }
@@ -89,6 +94,12 @@ public class FrameTwo extends Fragment {
 
     class FileRunnable implements Runnable {
         private ArrayList<String> photos;
+        private Note note;
+
+        public FileRunnable(ArrayList<String> photos, Note note) {
+            this.photos = photos;
+            this.note = note;
+        }
 
         public FileRunnable(ArrayList<String> photos) {
             this.photos = photos;
@@ -98,6 +109,7 @@ public class FrameTwo extends Fragment {
         public void run() {
 
             try {
+
                 List<String> cosUrls = FileUpload.uploadMulti(photos, getContext());
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < cosUrls.size(); i++) {
@@ -108,6 +120,13 @@ public class FrameTwo extends Fragment {
                 }
 
                 System.out.println(stringBuilder.toString());
+
+                note.setImages(stringBuilder.toString());
+                MOkHttp mOkHttp=new MOkHttp();
+                String url="http://www.sinbel.top/study/public/index.php/mobile/index/savenote";
+                mOkHttp.sendNote(note,url);
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();
