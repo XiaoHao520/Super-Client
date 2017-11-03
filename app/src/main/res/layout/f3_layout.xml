@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+
+    >
 
 
-     <Button
-         android:id="@+id/login"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="请登录"
-         />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/userHeader"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_centerInParent="true"
+            android:src="@drawable/add" />
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100px"
+            android:text="new user"
+            android:textColor="#000" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+
+        android:paddingLeft="50px"
+        android:paddingRight="50px">
+
+        <ListView
+            android:id="@+id/infoSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#fff"
+            android:dividerHeight="10dp"></ListView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+        android:text="登录" />
 </LinearLayout>

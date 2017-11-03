@@ -66,26 +66,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void gotoSuccess(JSONObject json) {
 
         //取出user的信息=>保存
-        System.out.println(json);
-
-        System.out.println("登录成功");
-        System.out.println(json.get("username"));
-        SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
 
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", json.get("username").toString());
+        if (json.size() == 8) {
 
-        editor.putString("nickname", json.get("user_nickname").toString());
-        editor.putString("userid", json.get("user_id").toString());
-        if (json.get("user_school") == null) {
-            editor.putString("userSchool", null);
+
+            System.out.println(json.toString());
+            SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", json.get("username").toString());
+            editor.putString("nickname", json.get("user_nickname").toString());
+            editor.putString("userid", json.get("user_id").toString());
+            editor.putString("userheader", json.get("user_header").toString());
+            editor.putString("password", json.get("user_password").toString());
+            if (json.get("user_school") == null) {
+                editor.putString("userSchool", null);
+            } else {
+                editor.putString("userSchool", json.get("user_school").toString());
+            }
+            editor.commit();
+            this.finish();
         } else {
-            editor.putString("userSchool", json.get("user_school").toString());
+            //登录失败
+            gotoFail();
         }
-        editor.commit();
-
-        this.finish();
     }
 
     public void gotoFail() {

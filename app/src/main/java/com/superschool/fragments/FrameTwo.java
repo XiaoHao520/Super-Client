@@ -18,6 +18,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -75,8 +76,20 @@ public class FrameTwo extends Fragment {
 
         @JavascriptInterface
         public void makeNote() {
-            Intent intent = new Intent(getActivity(), CardsActivity.class);
-            startActivityForResult(intent, MAKE_NOTE);
+            SharedPreferences sharedPreferences=getActivity().getSharedPreferences("localUser",Context.MODE_PRIVATE);
+            String username=sharedPreferences.getString("username",null);
+            String school=sharedPreferences.getString("userSchool",null);
+            if(username==null){
+                Toast.makeText(getContext(),"请先登录",Toast.LENGTH_LONG).show();
+
+            }else if(school==null){
+                Toast.makeText(getContext(), "请完善个人信息", Toast.LENGTH_LONG).show();
+            }else {
+                Intent intent = new Intent(getActivity(), CardsActivity.class);
+                startActivityForResult(intent, MAKE_NOTE);
+            }
+
+
         }
 
     }
@@ -137,8 +150,6 @@ public class FrameTwo extends Fragment {
                 MOkHttp mOkHttp=new MOkHttp();
                 String url="http://www.sinbel.top/study/public/index.php/mobile/index/savenote";
                 mOkHttp.sendNote(note,url);
-
-
 
             } catch (Exception e) {
                 e.printStackTrace();

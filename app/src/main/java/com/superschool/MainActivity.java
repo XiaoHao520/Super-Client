@@ -16,6 +16,7 @@ import com.superschool.customeview.MyViewpager;
 import com.superschool.fragments.FrameOne;
 import com.superschool.fragments.FrameThree;
 import com.superschool.fragments.FrameTwo;
+import com.superschool.init.InitUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        InitUser initUser=new InitUser(this);
+       // initUser.isLogined();
         initJM();
         initView();
-
     }
 
     private void initJM() {

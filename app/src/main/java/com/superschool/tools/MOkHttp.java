@@ -44,15 +44,20 @@ public class MOkHttp {
     }
 
     public String login(User user, String url) {
-        RequestBody body = new FormBody.Builder().add("username", user.getUsername()).add("password", user.getUserPassword()).build();
+
+
+
+        RequestBody body = new FormBody.Builder()
+                .add("username", user.getUsername())
+                .add("password", user.getUserPassword())
+                .build();
         Request request = new Request.Builder().url(url).post(body).build();
         Call call = okHttpClient.newCall(request);
 
         Response response = null;
-
-
         try {
             response = call.execute();
+
             return response.body().string();
 
         } catch (IOException e) {
@@ -63,15 +68,28 @@ public class MOkHttp {
         return null;
     }
 
-    public void sendNote(Note note,String url) throws IOException {
-
-
+    public void sendNote(Note note, String url) throws IOException {
         RequestBody body = new FormBody.Builder().add("userid", note.getUserId()).add("date", note.getDate())
-                .add("content",note.getContent()).add("images",note.getImages()).build();
-        Request request=new Request.Builder().url(url).post(body).build();
-        Call call=okHttpClient.newCall(request);
-        Response response=call.execute();
-        System.out.println("返回"+response.body().string());
+                .add("content", note.getContent()).add("images", note.getImages()).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+        System.out.println("返回" + response.body().string());
+
+    }
+
+    public boolean modifyUser(User user, String url) throws IOException {
+        RequestBody body = new FormBody.Builder()
+                .add("userid", user.getUserId())
+                .add("userheader", user.getUserHeader().toString())
+                .add("nickname", user.getUserNickName())
+                .add("school", user.getUserSchool())
+                .build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+        String rs= response.body().string();
+        return response.body().string().equals("1");
 
     }
 }
