@@ -27,120 +27,135 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"></com.superschool.customeview.MyViewpager>
 
+
             <LinearLayout
-                android:id="@+id/guide"
+                android:paddingBottom="20px"
                 android:layout_width="match_parent"
-                android:layout_height="250px"
-                android:layout_weight="1"
-                android:background="#ffffff"
-
+                android:layout_height="150px"
+                android:background="#ec0000"
                 android:orientation="horizontal"
+                android:paddingLeft="30px"
+                android:paddingRight="30px">
 
-                android:textAlignment="center">
+                <LinearLayout
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/schoolImg"
-                        android:layout_width="80px"
-                        android:layout_height="80px"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="0px"
-                        android:padding="0px"
-                        android:src="@drawable/schoolactived" />
-
-                    <TextView
-                        android:id="@+id/f1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/schoolImg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="0px"
-                        android:padding="0px"
-                        android:text="校园"
-                        android:textAlignment="center"
-                        android:textColor="#FE4080"
-                        android:textSize="11sp"
-
-                        />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="#c12323"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/f1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#fff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:src="@drawable/schoolactived" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="校园"
+                            android:textColor="#000" />
 
 
-                    >
+                    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/newsImg"
-                        android:layout_width="65px"
-
-                        android:layout_height="65px"
-
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-
-                        android:padding="0px"
-                        android:src="@drawable/news" />
-
-                    <TextView
+                    <LinearLayout
                         android:id="@+id/f2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                        android:layout_below="@id/newsImg"
-                        android:layout_centerHorizontal="true"
-                        android:text="附近动态"
-                        android:textAlignment="center"
-                        android:textSize="11sp"
+                        <ImageView
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:src="@drawable/schoolactived" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="校园"
+                            android:textColor="#000" />
+                    </LinearLayout>
 
 
-                        />
+                </LinearLayout>
 
+                <LinearLayout
 
-                </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#c12323"
+                    android:orientation="horizontal">
 
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/meImg"
-
-                        android:layout_width="65px"
-                        android:layout_height="65px"
-
-                        android:layout_centerHorizontal="true"
-
-                        android:layout_margin="0px"
-                        android:padding="0px"
-
-                        android:src="@drawable/user" />
-
-                    <TextView
+                    <LinearLayout
                         android:id="@+id/f3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/meImg"
-                        android:layout_centerHorizontal="true"
-                        android:text="me"
-                        android:textAlignment="center"
-                        android:textSize="11sp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#fff"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                </RelativeLayout>
+                        <ImageView
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:src="@drawable/schoolactived" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="校园"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/f4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:src="@drawable/schoolactived" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="校园"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
             </LinearLayout>
+
+
         </LinearLayout>
 
 

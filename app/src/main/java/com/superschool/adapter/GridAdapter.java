@@ -67,7 +67,7 @@ public class GridAdapter extends BaseAdapter {
 
 
 
-       GFImageView iv = (GFImageView) LayoutInflater.from(context).inflate(R.layout.grid_item, null).findViewById(R.id.iv);
+       GFImageView iv = (GFImageView) LayoutInflater.from(activity).inflate(R.layout.grid_item, null).findViewById(R.id.iv);
       /*  Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(photoInfoList.get(i).getPhotoPath()), 200, 200, false);
         iv = (ImageView) LayoutInflater.from(context).inflate(R.layout.grid_item, null).findViewById(R.id.iv);
         iv.setImageBitmap(bitmap);*/
