@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         InitUser initUser=new InitUser(this);
-       // initUser.isLogined();
         initJM();
+        initUser.login();//初始登录
         initView();
     }
 
@@ -90,33 +90,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        System.out.println("onrestart");
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        System.out.println("pause");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("onresume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        System.out.println("onstop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        System.out.println("ondestory");
-    }
 }

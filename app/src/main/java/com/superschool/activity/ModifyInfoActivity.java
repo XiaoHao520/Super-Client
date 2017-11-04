@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.superschool.R;
 import com.superschool.entity.User;
 import com.superschool.tools.ImagePicker;
@@ -48,7 +50,7 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
         userHeader = (GFImageView) findViewById(R.id.userHeader);
         userHeader.setOnClickListener(this);
         nickname.setText(shared.getString("nickname", null));
-
+        school.setText(shared.getString("school",null));
 
     }
 
@@ -59,12 +61,12 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
             String schoolName = school.getText().toString();
 
 
-            System.out.println("================"+schoolName);
-            if(schoolName.equals("")){
-                schoolName=school.getHint().toString();
+            System.out.println("================" + schoolName);
+            if (schoolName.equals("")) {
+                schoolName = school.getHint().toString();
             }
             String nicknameContent = nickname.getText().toString();
-            String userHeaderPath = shared.getString("userheader",null);
+            String userHeaderPath = shared.getString("userheader", null);
 
             String userid = shared.getString("userid", null);
 
@@ -78,11 +80,11 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
             user.setUserHeader(userHeaderPath);
 
             String url = "http://www.sinbel.top/study/public/index.php/user/user/modify";
-            new Thread(new MRunable(user,url,this)).start();
+            new Thread(new MRunable(user, url, this)).start();
 
-            dialogBuilder = new AlertDialog.Builder(this);
-            dialogBuilder.setMessage("等待");
-            dialogBuilder.create().show();
+            //  dialogBuilder = new AlertDialog.Builder(this);
+            //dialogBuilder.setMessage("等待");
+            //  dialogBuilder.create().show();
         }
         if (userHeader == view) {
             ImagePicker picker = new ImagePicker();
@@ -101,8 +103,7 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
 
         User user;
         String url;
-
-        boolean flag;
+        String rs;
         ModifyInfoActivity activity;
 
         public MRunable(User user, String url, ModifyInfoActivity activity) {
@@ -115,27 +116,35 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
         public void run() {
             MOkHttp ok = new MOkHttp();
             try {
-                flag = ok.modifyUser(user, url);
-
-
-                if(flag){
-
-                    System.out.println("返回了");
-                    activity.stopAlter();
-                }else {
-
-                }
-
+                rs = ok.modifyUser(user, url);
+                JSONArray jsonArray = JSONArray.parseArray(rs);
+                JSONObject json = JSONObject.parseObject(jsonArray.get(0).toString());
+                SharedPreferences sharedPreferences = activity.getSharedPreferences("localUser", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("nickname", json.getString("user_nickname"));
+                editor.putString("school", json.getString("user_school"));
+                editor.putString("userheader", json.getString("user_header"));
+                editor.commit();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            activity.stopAlert();
         }
     }
 
-    public void stopAlter(){
-      dialogBuilder.show().dismiss();
-        Intent intent=this.getIntent();
-        this.setResult(1,intent.putExtra("nickname",nickname.getText().toString()));
+    public void stopAlert() {
+        // dialogBuilder.show().dismiss();
+        Intent intent = this.getIntent();
+        this.setResult(1, intent.putExtra("nickname", nickname.getText().toString()));
         this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        this.setResult(0);
+        this.finish();
+
     }
 }

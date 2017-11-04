@@ -113,10 +113,7 @@ public class JMsg {
                     //登录成功从服务器拉回信息=>通过接口的形式获取json
                     //  loginActivity.gotoSuccess(user);
 
-
-
-
-                    new Thread(new Runnable() {
+                   new Thread(new Runnable() {
                         @Override
                         public void run() {
                             String url = "http://www.sinbel.top/study/public/index.php/user/user/login";

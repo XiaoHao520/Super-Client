@@ -78,7 +78,7 @@ public class MOkHttp {
 
     }
 
-    public boolean modifyUser(User user, String url) throws IOException {
+    public String modifyUser(User user, String url) throws IOException {
         RequestBody body = new FormBody.Builder()
                 .add("userid", user.getUserId())
                 .add("userheader", user.getUserHeader().toString())
@@ -88,8 +88,7 @@ public class MOkHttp {
         Request request = new Request.Builder().url(url).post(body).build();
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
-        String rs= response.body().string();
-        return response.body().string().equals("1");
+        return response.body().string();
 
     }
 }

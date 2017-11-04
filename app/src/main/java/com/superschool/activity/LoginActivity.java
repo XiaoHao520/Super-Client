@@ -64,13 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void gotoSuccess(JSONObject json) {
-
         //取出user的信息=>保存
-
-
         if (json.size() == 8) {
-
-
             System.out.println(json.toString());
             SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -96,33 +91,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        System.out.println("--------------onrestart");
+    public void jMisLogin(){
+        System.out.println("************************8MainActivity*********************");
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        System.out.println("----------------pause");
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("---------------onresume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        System.out.println("-----------------onstop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        System.out.println("------------ondestory");
-    }
 }

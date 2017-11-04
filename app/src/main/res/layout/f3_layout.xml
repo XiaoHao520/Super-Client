@@ -28,14 +28,13 @@
             android:layout_marginTop="100px"
             android:text="new user"
             android:textColor="#000" />
-
     </RelativeLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150px"
-
         android:paddingLeft="50px"
         android:paddingRight="50px">
 
@@ -45,12 +44,15 @@
             android:layout_height="wrap_content"
             android:divider="#fff"
             android:dividerHeight="10dp"></ListView>
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150px"
+            android:text="登录" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150px"
-        android:text="登录" />
+
+
+
 </LinearLayout>
