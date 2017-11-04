@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText password;
     private Button login;
     private Button register;
+    private static final int LOGINED = 820;
 
     JMsg jMsg;
 
@@ -74,12 +75,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("userid", json.get("user_id").toString());
             editor.putString("userheader", json.get("user_header").toString());
             editor.putString("password", json.get("user_password").toString());
+            editor.putBoolean("isLogin",true);
             if (json.get("user_school") == null) {
                 editor.putString("userSchool", null);
             } else {
                 editor.putString("userSchool", json.get("user_school").toString());
             }
             editor.commit();
+            this.setResult(LOGINED);
             this.finish();
         } else {
             //登录失败
