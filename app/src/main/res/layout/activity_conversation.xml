@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.superschool.activity.ConversationActivity">
+
+    <RelativeLayout
+        android:paddingLeft="20px"
+
+        android:paddingRight="20px"
+        android:background="@color/colorAccent"
+
+        android:layout_width="match_parent"
+        android:layout_height="120px">
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            />
+        <TextView
+            android:textSize="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nickname"
+            android:layout_centerInParent="true"
+            />
+
+
+        <ImageView
+
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:layout_centerVertical="true"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@drawable/add"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+
+            android:scrollbars="none"
+            android:paddingBottom="20px"
+            android:longClickable="false"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:fadeScrollbars="false"
+            android:divider="@null"
+            android:id="@+id/conversationList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout"></ListView>
+
+        <RelativeLayout
+
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:layout_alignParentBottom="true"
+
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:id="@+id/relativeLayout">
+
+            <ImageView
+                android:id="@+id/additional"
+                android:layout_centerVertical="true"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:src="@drawable/additional"/>
+
+            <EditText
+                android:paddingLeft="20px"
+                android:paddingRight="20px"
+                android:layout_toEndOf="@id/additional"
+                android:textColor="#000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="输入"
+                android:layout_toStartOf="@id/send"
+                />
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/send"
+                android:id="@id/send"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

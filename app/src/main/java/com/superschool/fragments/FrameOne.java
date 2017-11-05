@@ -54,17 +54,13 @@ public class FrameOne extends Fragment {
         ws.setAppCacheEnabled(true);
         ws.setJavaScriptEnabled(true);
 
-
         webView.setWebChromeClient(new WebChromeClient() {
-
-
         });
         webView.setWebViewClient(new WebViewClient(){
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-
                 view.loadUrl(request.getUrl().getPath());
                 return true;
             }

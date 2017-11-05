@@ -43,7 +43,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private GFImageView addHeader;
     private MHandler mHandler;
     JMsg jMsg;
-    private static String headerPath;
+    private static String headerPath=null;
     MImageLoader imageLoader;
 
     @Override
@@ -74,7 +74,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         if (view == register) {
             User user = new User();
-            if (!headerPath.equals("")) {
+            if (headerPath!=null) {
                 String headUrl = null;
                 try {
                     headUrl = FileUpload.uploadSingle(headerPath, getApplicationContext());
@@ -82,6 +82,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     e.printStackTrace();
                 }
                 user.setUserHeader(headUrl);
+            }else {
+                user.setUserHeader("http://super-1252119503.cosgz.myqcloud.com/b2140269ab78105353269047a8d60473IMG_20171031_194321.jpg");
             }
             user.setUsername(username.getText().toString());
             user.setUserPassword(password1.getText().toString());

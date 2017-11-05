@@ -1,6 +1,7 @@
 package com.superschool.tools;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -14,11 +15,14 @@ import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by xiaohao on 17-11-2.
  */
 
 public class JMsg {
+    private static final int LOGINED = 820;
     private Context context;
     static JMsg jMsg = null;
 
@@ -69,27 +73,27 @@ public class JMsg {
             public void gotResult(int i, String s) {
 
 
-                if(i==0){
+                if (i == 0) {
                     JMessageClient.login(user.getUsername(), user.getUserPassword(), new BasicCallback() {
                         @Override
                         public void gotResult(int i, String s) {
-                            if(i==0){
-                                UserInfo userInfo=JMessageClient.getMyInfo();
+                            if (i == 0) {
+                                UserInfo userInfo = JMessageClient.getMyInfo();
 
-                                    user.setUserId(String.valueOf(userInfo.getUserID()));
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            String url="http://www.sinbel.top/study/public/index.php/user/user/register";
-                                            MOkHttp mOkHttp=new MOkHttp();
-                                            String rs=mOkHttp.register(user,url);
-                                            if(!rs.equals("")){
-                                                System.out.println(rs);
-                                                registerActivity.gotoSuccess();
-                                            }
-
+                                user.setUserId(String.valueOf(userInfo.getUserID()));
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String url = "http://www.sinbel.top/study/public/index.php/user/user/register";
+                                        MOkHttp mOkHttp = new MOkHttp();
+                                        String rs = mOkHttp.register(user, url);
+                                        if (!rs.equals("")) {
+                                            System.out.println(rs);
+                                            registerActivity.gotoSuccess();
                                         }
-                                    }).start();
+
+                                    }
+                                }).start();
 
                             }
                         }
@@ -99,7 +103,6 @@ public class JMsg {
                /* */
             }
         });
-
 
 
     }
@@ -113,7 +116,7 @@ public class JMsg {
                     //登录成功从服务器拉回信息=>通过接口的形式获取json
                     //  loginActivity.gotoSuccess(user);
 
-                   new Thread(new Runnable() {
+                    new Thread(new Runnable() {
                         @Override
                         public void run() {
                             String url = "http://www.sinbel.top/study/public/index.php/user/user/login";
@@ -121,7 +124,8 @@ public class JMsg {
                             String rs = mOk.login(user, url);
                             System.out.println(rs);
                             JSONArray obj = JSON.parseArray(rs);
-                            loginActivity.gotoSuccess(JSONObject.parseObject(obj.get(0).toString()));
+                            JSONObject json = JSON.parseObject(obj.get(0).toString());
+                            loginActivity.gotoSuccess(json);
                         }
                     }).start();
 
@@ -129,5 +133,7 @@ public class JMsg {
             }
         });
     }
+
+
 
 }

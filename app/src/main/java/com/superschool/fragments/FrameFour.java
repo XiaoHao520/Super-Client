@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.im.android.api.JMessageClient;
+
 /**
  * Created by xiaohao on 17-10-16.
  */
@@ -61,6 +63,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
     }
 
     private void initView() {
+        JMessageClient.init(getActivity());
         imageView= (NetworkImageView) view.findViewById(R.id.userHeader);
         login = (Button) view.findViewById(R.id.login);
         login.setOnClickListener(this);

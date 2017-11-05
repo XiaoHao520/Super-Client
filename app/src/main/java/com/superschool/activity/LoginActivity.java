@@ -66,7 +66,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void gotoSuccess(JSONObject json) {
         //取出user的信息=>保存
-        if (json.size() == 8) {
+        if (json.size() > 0) {
+            System.out.println("登录成功");
             System.out.println(json.toString());
             SharedPreferences sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

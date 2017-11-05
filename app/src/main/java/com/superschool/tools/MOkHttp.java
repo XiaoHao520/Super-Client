@@ -24,6 +24,8 @@ public class MOkHttp {
     }
 
     public String register(User user, String url) {
+
+        System.out.println(" eddddddddddddddddddddddddddddddddddd"+user.getUserHeader());
         RequestBody body = new FormBody.Builder()
                 .add("username", user.getUsername())
                 .add("email", user.getUserEmail())
@@ -44,7 +46,6 @@ public class MOkHttp {
     }
 
     public String login(User user, String url) {
-
 
 
         RequestBody body = new FormBody.Builder()
@@ -89,6 +90,21 @@ public class MOkHttp {
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
         return response.body().string();
+
+    }
+
+    public void like(String url,String myUsername, String noteUser, String noteId) {
+        RequestBody body = new FormBody.Builder().add("from", myUsername)
+                .add("to", noteUser).add("noteid", noteId).build();
+        Request request=new Request.Builder().url(url).post(body).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            Response response=call.execute();
+            System.out.println(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

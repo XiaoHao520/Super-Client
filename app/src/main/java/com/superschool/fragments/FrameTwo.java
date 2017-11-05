@@ -31,7 +31,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.superschool.activity.CardsActivity;
@@ -39,6 +41,10 @@ import com.superschool.entity.Note;
 import com.superschool.tools.FileUpload;
 import com.superschool.tools.LruImageCache;
 import com.superschool.tools.MOkHttp;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.CustomContent;
+import cn.jpush.im.android.api.model.Message;
 
 import static android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
 
@@ -53,6 +59,7 @@ public class FrameTwo extends Fragment {
     //  private String url="file:///android_asset/card.html";
     private static final int MAKE_NOTE = 1;
     View view;
+    SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -63,6 +70,7 @@ public class FrameTwo extends Fragment {
     }
 
     private void initView() {
+        sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
         web = (WebView) view.findViewById(R.id.web);
         WebSettings ws = web.getSettings();
         ws.setJavaScriptEnabled(true);
@@ -76,20 +84,45 @@ public class FrameTwo extends Fragment {
 
         @JavascriptInterface
         public void makeNote() {
-            SharedPreferences sharedPreferences=getActivity().getSharedPreferences("localUser",Context.MODE_PRIVATE);
-            String username=sharedPreferences.getString("username",null);
-            String school=sharedPreferences.getString("userSchool",null);
-            if(username==null){
-                Toast.makeText(getContext(),"请先登录",Toast.LENGTH_LONG).show();
+            String username = sharedPreferences.getString("username", null);
+            String school = sharedPreferences.getString("userSchool", null);
+            if (username == null) {
+                Toast.makeText(getContext(), "请先登录", Toast.LENGTH_LONG).show();
 
-            }else if(school==null){
+            } else if (school == null) {
                 Toast.makeText(getContext(), "请完善个人信息", Toast.LENGTH_LONG).show();
-            }else {
+            } else {
                 Intent intent = new Intent(getActivity(), CardsActivity.class);
                 startActivityForResult(intent, MAKE_NOTE);
             }
 
 
+        }
+
+        @JavascriptInterface
+        public void likeClick(final String noteId, final String noteUser) {
+            final String likeUrl = "http://www.sinbel.top/study/public/index.php/mobile/index/like";
+
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Date date = new Date();
+                    MOkHttp mOkHttp = new MOkHttp();
+                    String username = sharedPreferences.getString("username", null);
+                    mOkHttp.like(likeUrl, username, noteUser, noteId);
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("from", username);
+                    map.put("type", "like");
+                    map.put("username",sharedPreferences.getString("username",null));
+                    map.put("content", "我赞了你咯");
+                    map.put("date", String.valueOf(date.getHours()));
+                    map.put("header",sharedPreferences.getString("userheader",null));
+                    map.put("nickname",sharedPreferences.getString("nickname",null));
+                    Message message = JMessageClient.createSingleCustomMessage(noteUser, map);
+                    JMessageClient.sendMessage(message);
+                }
+            }).start();
         }
 
     }
@@ -98,19 +131,19 @@ public class FrameTwo extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == 1) {
             //获取返回的数据
-            SharedPreferences sharedPreferences=getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
-            String userId=sharedPreferences.getString("userid",null);
-            Note note=new Note();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
+            String userId = sharedPreferences.getString("userid", null);
+            Note note = new Note();
             note.setUserId(userId);
-            SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 
-            Date date=new Date();
+            Date date = new Date();
             note.setDate(format.format(date));
 
-            System.out.println("userid:============"+userId);
+            System.out.println("userid:============" + userId);
             note.setContent(data.getStringExtra("content"));
             ArrayList<String> photos = data.getStringArrayListExtra("photos");
-            FileRunnable fileRunnable = new FileRunnable(photos,note);
+            FileRunnable fileRunnable = new FileRunnable(photos, note);
             new Thread(fileRunnable).start();
 
         }
@@ -147,9 +180,9 @@ public class FrameTwo extends Fragment {
                 System.out.println(stringBuilder.toString());
 
                 note.setImages(stringBuilder.toString());
-                MOkHttp mOkHttp=new MOkHttp();
-                String url="http://www.sinbel.top/study/public/index.php/mobile/index/savenote";
-                mOkHttp.sendNote(note,url);
+                MOkHttp mOkHttp = new MOkHttp();
+                String url = "http://www.sinbel.top/study/public/index.php/mobile/index/savenote";
+                mOkHttp.sendNote(note, url);
 
             } catch (Exception e) {
                 e.printStackTrace();
