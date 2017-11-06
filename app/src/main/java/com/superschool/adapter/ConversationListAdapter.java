@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.superschool.R;
+import com.superschool.tools.Time;
 
 import java.util.List;
 import java.util.Map;
@@ -60,8 +61,8 @@ public class ConversationListAdapter extends BaseAdapter {
         TextView date = (TextView) conversation.findViewById(R.id.date);
         username.setText(map.get("nickname"));
         last.setText(map.get("content"));
-        date.setText(map.get("date"));
-        //  header.setImageUrl(map.get("header"),new ImageLoader(Volley.newRequestQueue(activity),LruImageCache.instance()));
+        date.setText(Time.getTime(map.get("date")));
+
         Glide.with(activity).load(map.get("header")).placeholder(R.drawable.user).error(R.drawable.user).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(new ImageViewTarget<GlideDrawable>(header) {
                     @Override

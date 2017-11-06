@@ -130,12 +130,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     CustomContent content = (CustomContent) message.getContent();
 
                     if ("text".equals(content.getStringValue("type"))) {
-
-                        System.out.println("--------------------------");
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("from", message.getFromUser().getUserName());
                         map.put("content", content.getStringValue("content"));
                         map.put("date", content.getStringValue("date"));
+
                         map.put("header", content.getStringValue("header"));
                         map.put("nickname", content.getStringValue("nickname"));
                         map.put("username", message.getFromUser().getUserName());

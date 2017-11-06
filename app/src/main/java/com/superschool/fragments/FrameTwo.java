@@ -42,6 +42,7 @@ import com.superschool.entity.Note;
 import com.superschool.tools.FileUpload;
 import com.superschool.tools.LruImageCache;
 import com.superschool.tools.MOkHttp;
+import com.superschool.tools.Time;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.CustomContent;
@@ -108,7 +109,7 @@ public class FrameTwo extends Fragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Date date = new Date();
+
                     MOkHttp mOkHttp = new MOkHttp();
                     String username = sharedPreferences.getString("username", null);
 
@@ -122,7 +123,7 @@ public class FrameTwo extends Fragment {
                     map.put("type", "text");
                     map.put("username",sharedPreferences.getString("username",null));
                     map.put("content", "我赞了你咯");
-                    map.put("date", String.valueOf(date.getHours()));
+                    map.put("date", Time.getNow());
                     map.put("header",sharedPreferences.getString("userheader",null));
                     map.put("nickname",sharedPreferences.getString("nickname",null));
                     Message message = JMessageClient.createSingleCustomMessage(noteUser, map);
@@ -145,8 +146,6 @@ public class FrameTwo extends Fragment {
 
             Date date = new Date();
             note.setDate(format.format(date));
-
-
             note.setContent(data.getStringExtra("content"));
             ArrayList<String> photos = data.getStringArrayListExtra("photos");
             FileRunnable fileRunnable = new FileRunnable(photos, note);

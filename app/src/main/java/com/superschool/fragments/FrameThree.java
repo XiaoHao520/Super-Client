@@ -89,7 +89,6 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
         Intent intent = new Intent(getActivity(), ConversationActivity.class);
         intent.putExtra("data", (Serializable) data.get(position));
         startActivityForResult(intent, CONVERSATION);
-
     }
 
     @Override
@@ -102,14 +101,8 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
             System.out.println(resultCode);
             if (resultCode == 929) {
                 Map<String, String> map = (Map<String, String>) data.getSerializableExtra("data");
-                System.out.println(map);
-
-
                 this.data.set(0,map);
                 adapter.notifyDataSetChanged();
-
-                // updateConversationList(map);
-
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

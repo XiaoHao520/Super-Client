@@ -19,9 +19,13 @@ import com.bumptech.glide.request.target.ImageViewTarget;
 import com.superschool.R;
 import com.superschool.adapter.ConversationAdapter;
 import com.superschool.fragments.FrameThree;
+import com.superschool.tools.Time;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +56,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private SharedPreferences sharedPreferences;
     private static final int CONVERSATION = 929;
 
+
+    private static String returnNickname;
+    private static String returnUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +86,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
         data = new ArrayList<Map<String, String>>();
 
+
         intent = getIntent();
         from = (Map<String, String>) intent.getSerializableExtra("data");
 
+        returnNickname = from.get("nickname");
+        returnUsername = from.get("username");
 
         data.add(from);
         adapter = new ConversationAdapter(this, data);
@@ -106,10 +117,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 map.put("content", content);
             }
             data.add(map);
-            Date date = new Date();
+
             map.put("type", "text");
             map.put("content", input.getText().toString());
-            map.put("date", String.valueOf(date.getHours()));
+            map.put("date", Time.getNow());
             map.put("header", sharedPreferences.getString("userheader", null));
             map.put("nickname", sharedPreferences.getString("nickname", null));
             Message message = JMessageClient.createSingleCustomMessage(from.get("username"), map);
@@ -137,7 +148,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         super.onDestroy();
 
 
-       // back();
+        // back();
 
     }
 
@@ -153,13 +164,16 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void back() {
+
         JMessageClient.exitConversation();
         JMessageClient.unRegisterEventReceiver(this);
-        System.out.println(data.get(data.size()-1));
-        intent.putExtra("data", (Serializable) data.get(data.size()-1));
-        this.setResult(CONVERSATION,intent);
+        Map<String, String> map = data.get(data.size() - 1);
+        map.put("username", returnUsername);
+        map.put("nickname", returnNickname);
+        map.put("date", Time.getNow());
+        intent.putExtra("data", (Serializable) map);
 
-
+        this.setResult(CONVERSATION, intent);
         this.finish();
     }
 
@@ -205,4 +219,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
 
     }
+
+
+
+
 }
