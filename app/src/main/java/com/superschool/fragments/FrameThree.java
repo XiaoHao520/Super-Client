@@ -100,12 +100,15 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
             System.out.println(requestCode);
 
             System.out.println(resultCode);
-            if(resultCode==929){
+            if (resultCode == 929) {
+                Map<String, String> map = (Map<String, String>) data.getSerializableExtra("data");
+                System.out.println(map);
 
 
-                System.out.println("-----=============================================");
-                Map<String,String>map= (Map<String, String>) data.getSerializableExtra("data");
-                updateConversationList(map);
+                this.data.set(0,map);
+                adapter.notifyDataSetChanged();
+
+                // updateConversationList(map);
 
             }
         }
