@@ -7,9 +7,9 @@ sharedpreference:
  userid; ,isLogin
 nickname
 "id":1,"username":"xiaohao","user_id":"142011018","user_password":"123456","user_school":"\u4e2d\u5927\u5357\u65b9","user_nickname":"you are my zing","user_email":"ganxiaohao520@163.com","user_header":"http:\/\/www.sinbel.top\/superServer\/public\/static\/images\/def-header.png"}
-
     private static final int LOGINED = 820;
 
 
     消息的分类:
     conversation
+    u m;

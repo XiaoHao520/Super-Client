@@ -142,7 +142,6 @@ public class ModifyInfoActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         this.setResult(0);
         this.finish();
 

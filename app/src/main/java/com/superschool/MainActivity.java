@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.superschool.activity.ConversationActivity;
 import com.superschool.adapter.FragmentAdapter;
 import com.superschool.customeview.MyViewpager;
 import com.superschool.fragments.FrameOne;
@@ -28,7 +29,9 @@ import java.util.Map;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.CustomContent;
 import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.event.ConversationRefreshEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 
 import static com.superschool.R.id.map;
@@ -51,13 +54,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initJM();
         InitUser initUser = new InitUser(this);
-
         initUser.login();//初始登录
         initView();
     }
 
-    private void initJM() {
 
+    @Override
+    protected void onStart() {
+
+        System.out.println("main ---------------onstart");
+        super.onStart();
+
+    }
+
+    private void initJM() {
         System.out.println("初始化");
         JMessageClient.init(getApplicationContext());
         JMessageClient.registerEventReceiver(this);
@@ -114,38 +124,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Message message = event.getMessage();
         if (message != null) {
             switch (message.getContentType()) {
-                case text: {
-                    //处理文字消息
-                    TextContent textContent = (TextContent) message.getContent();
 
-                    System.out.println(textContent.getText());
-                    FrameThree.show();
-
-
-                    break;
-                }
                 case custom: {
 
                     CustomContent content = (CustomContent) message.getContent();
 
-                    if("like".equals(content.getStringValue("type"))){
+                    if ("text".equals(content.getStringValue("type"))) {
+
+                        System.out.println("--------------------------");
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("from", message.getFromUser().getUserName());
+                        map.put("content", content.getStringValue("content"));
+                        map.put("date", content.getStringValue("date"));
+                        map.put("header", content.getStringValue("header"));
+                        map.put("nickname", content.getStringValue("nickname"));
+                        map.put("username", message.getFromUser().getUserName());
+                        map.put("status","u");
+                        FrameThree.updateConversationList(map);
+                    }
+
+                    if ("conversation".equals(content.getStringValue("type"))) {
 
 
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("from", content.getStringValue("from"));
-                        map.put("last", content.getStringValue("content"));
+                        map.put("content", content.getStringValue("content"));
                         map.put("date", content.getStringValue("date"));
                         map.put("header", content.getStringValue("header"));
                         map.put("nickname", content.getStringValue("nickname"));
-                        map.put("username",content.getStringValue("username"));
+                        map.put("username", content.getStringValue("username"));
 
                         FrameThree.updateConversationList(map);
 
 
-
                     }
-
-
                     break;
                 }
 
@@ -156,5 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
 
 }

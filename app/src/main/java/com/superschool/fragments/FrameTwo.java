@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,15 @@ public class FrameTwo extends Fragment {
                     Date date = new Date();
                     MOkHttp mOkHttp = new MOkHttp();
                     String username = sharedPreferences.getString("username", null);
+
+                    if(username==null){
+                        gotoLogin();
+                        return;
+                    }
                     mOkHttp.like(likeUrl, username, noteUser, noteId);
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("from", username);
-                    map.put("type", "like");
+                    map.put("type", "text");
                     map.put("username",sharedPreferences.getString("username",null));
                     map.put("content", "我赞了你咯");
                     map.put("date", String.valueOf(date.getHours()));
@@ -140,7 +146,7 @@ public class FrameTwo extends Fragment {
             Date date = new Date();
             note.setDate(format.format(date));
 
-            System.out.println("userid:============" + userId);
+
             note.setContent(data.getStringExtra("content"));
             ArrayList<String> photos = data.getStringArrayListExtra("photos");
             FileRunnable fileRunnable = new FileRunnable(photos, note);
@@ -190,4 +196,35 @@ public class FrameTwo extends Fragment {
         }
     }
 
+    public void gotoLogin(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setMessage("请登录");
+        builder.create().show();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        System.out.println("恢复");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("onpause");
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((ViewGroup)web.getParent()).removeView(web);
+        web.destroy();
+        web=null;
+        System.out.println("main destory");
+
+    }
 }

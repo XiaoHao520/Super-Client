@@ -53,13 +53,13 @@ public class ConversationListAdapter extends BaseAdapter {
 
         Map<String, String> map = data.get(position);
         LinearLayout conversation = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.conversation_item, null);
-        //   NetworkImageView header = (NetworkImageView) conversation_item.findViewById(R.id.header);
+
         final ImageView header = (ImageView) conversation.findViewById(R.id.header);
         TextView username = (TextView) conversation.findViewById(R.id.username);
         TextView last = (TextView) conversation.findViewById(R.id.last);
         TextView date = (TextView) conversation.findViewById(R.id.date);
         username.setText(map.get("nickname"));
-        last.setText(map.get("last"));
+        last.setText(map.get("content"));
         date.setText(map.get("date"));
         //  header.setImageUrl(map.get("header"),new ImageLoader(Volley.newRequestQueue(activity),LruImageCache.instance()));
         Glide.with(activity).load(map.get("header")).placeholder(R.drawable.user).error(R.drawable.user).diskCacheStrategy(DiskCacheStrategy.ALL)
