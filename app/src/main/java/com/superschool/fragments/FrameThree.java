@@ -81,6 +81,7 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
         }
         data.add(0, map);
         adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
             System.out.println(resultCode);
             if (resultCode == 929) {
                 Map<String, String> map = (Map<String, String>) data.getSerializableExtra("data");
-                this.data.set(0,map);
+                this.data.set(0, map);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -111,5 +112,13 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
     private void itemTotop(Map<String, String> map) {
 
 
+    }
+
+    @Override
+    public void onResume() {
+
+        adapter.notifyDataSetChanged();
+
+        super.onResume();
     }
 }
