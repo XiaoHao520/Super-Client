@@ -2,11 +2,14 @@ package com.superschool;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -46,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout f2;
     private LinearLayout f4;
     private LinearLayout f3;
-    private MyViewpager vp;
+    private static MyViewpager vp;
     List<Fragment> fragmentList;
     SharedPreferences shared;
     private static String localUser;
     ConversationRecording recording;
 
 
-    private static List<Map<String,String>>data;
+    private static List<Map<String, String>> data;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -61,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
+        System.out.println("main ---------------onstart");
         shared = getSharedPreferences("localUser", MODE_PRIVATE);
         localUser = shared.getString("username", null);
-        data=new ArrayList<Map<String, String>>();
+        data = new ArrayList<Map<String, String>>();
 
         initJM();
         InitUser initUser = new InitUser(this);
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
 
-        System.out.println("main ---------------onstart");
+
         // insertTest();
         super.onStart();
 
@@ -137,16 +140,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        vp.setOffscreenPageLimit(3);
         if (view == f1) {
+
             vp.setCurrentItem(0);
         }
         if (view == f4) {
+
             vp.setCurrentItem(3);
         }
         if (view == f2) {
+
             vp.setCurrentItem(1);
         }
         if (view == f3) {
+
             vp.setCurrentItem(2);
         }
     }
@@ -166,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         map.put("from", message.getFromUser().getUserName());
                         map.put("content", content.getStringValue("content"));
                         map.put("date", content.getStringValue("date"));
-
                         map.put("header", content.getStringValue("header"));
                         map.put("nickname", content.getStringValue("nickname"));
                         map.put("username", message.getFromUser().getUserName());
@@ -175,8 +182,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if ("conversation".equals(content.getStringValue("type"))) {
-
-
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("from", content.getStringValue("from"));
                         map.put("content", content.getStringValue("content"));
@@ -207,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             List<ConversationRecording> conversationList = recording.where("localUser=?", localUser).find(ConversationRecording.class);
             if (conversationList != null) {
                 for (ConversationRecording recording : conversationList) {
-                    Map<String,String>map=new HashMap<String, String>();
+                    Map<String, String> map = new HashMap<String, String>();
                     map.put("from", recording.getChatUser());
                     map.put("content", recording.getLast());
                     map.put("date", recording.getDate());
@@ -223,6 +228,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+    }
+
+    public static void selectFragement(int i, String what) {
+        vp.setCurrentItem(i);
+
+
+        if (what.equals("store")) {
+
+            System.out.println("执行了没");
+
+            FrameOne.pickPos();
+        }
     }
 
 }

@@ -56,6 +56,7 @@ public class InitUser {
                                     editor.putString("nickname", json.get("user_nickname").toString());
                                     editor.putString("userid", json.get("user_id").toString());
                                     editor.putString("userheader", json.get("user_header").toString());
+                                    editor.putString("store",json.get("store").toString());
                                     if (json.get("user_school") == null) {
                                         editor.putString("school", null);
                                     } else {

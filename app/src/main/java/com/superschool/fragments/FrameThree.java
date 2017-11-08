@@ -139,33 +139,5 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-
-
-
-
-/*
-
-        List<ConversationRecording> current = recording.where("localUser=? and chatUser=?",
-                localUser, returnUsername).find(ConversationRecording.class);
-        if (current != null) {
-            recording.deleteAll(ConversationRecording.class, "localUser=? and chatUser=?", localUser, returnUsername);
-        }
-        recording.setLocalUser(localUser);
-        recording.setChatUser(returnUsername);
-        recording.setNickname(returnNickname);
-        recording.setDate(Time.getNow());
-        recording.setHeader(userHeader);
-
-
-        if (recording.save()) {
-            Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_LONG).show();
-            System.out.println("保存成功");
-        } else {
-            Toast.makeText(getApplicationContext(), "保存失败", Toast.LENGTH_LONG).show();
-            System.out.println("保存失败");
-        }
-*/
-
     }
 }

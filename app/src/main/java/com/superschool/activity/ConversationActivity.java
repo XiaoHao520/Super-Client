@@ -62,13 +62,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private static String userHeader;
     List<Message> msgList;
     private static String localUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         JMessageClient.registerEventReceiver(this);
         sharedPreferences = getSharedPreferences("localUser", MODE_PRIVATE);
-        localUser=sharedPreferences.getString("username",null);
+        localUser = sharedPreferences.getString("username", null);
         initView();
         initData();
         enterConversation();
@@ -164,13 +165,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         if ("text".equals(content.getStringValue("type"))) {
 
                             Map<String, String> map = new HashMap<String, String>();
-
-
-                            System.out.println("---------------------"+localUser);
-                            if(message.getFromUser().getUserName().equals(localUser)){
+                            if (message.getFromUser().getUserName().equals(localUser)) {
                                 map.put("status", "m");
-                            }else {
-                                map.put("status","u");
+                            } else {
+                                map.put("status", "u");
                             }
 
                             map.put("from", message.getFromUser().getUserName());
@@ -203,6 +201,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         back();
         super.onBackPressed();
     }
+
     private void back() {
         JMessageClient.exitConversation();
         JMessageClient.unRegisterEventReceiver(this);
@@ -212,7 +211,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         map.put("date", Time.getNow());
         intent.putExtra("data", (Serializable) map);
         ConversationRecording recording = new ConversationRecording();
-         localUser = sharedPreferences.getString("username", null).toString();
+        localUser = sharedPreferences.getString("username", null).toString();
         List<ConversationRecording> current = recording.where("localUser=? and chatUser=?",
                 localUser, returnUsername).find(ConversationRecording.class);
         if (current != null) {

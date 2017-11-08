@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("userid", json.get("user_id").toString());
             editor.putString("userheader", json.get("user_header").toString());
             editor.putString("password", json.get("user_password").toString());
+            editor.putString("store",json.get("store").toString());
             editor.putBoolean("isLogin",true);
             if (json.get("user_school") == null) {
                 editor.putString("userSchool", null);

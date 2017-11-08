@@ -1,6 +1,7 @@
 package com.superschool.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.superschool.MainActivity;
 import com.superschool.R;
 import com.superschool.activity.LoginActivity;
 import com.superschool.activity.ModifyInfoActivity;
@@ -53,6 +56,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
     SharedPreferences.Editor editor;
     SimpleAdapter adapter;
     NetworkImageView imageView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
 
     private void initView() {
         JMessageClient.init(getActivity());
-        imageView= (NetworkImageView) view.findViewById(R.id.userHeader);
+        imageView = (NetworkImageView) view.findViewById(R.id.userHeader);
         login = (Button) view.findViewById(R.id.login);
         login.setOnClickListener(this);
         sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
@@ -103,9 +107,44 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        if (i == 2) {
-            startActivityForResult(new Intent(getActivity(), ModifyInfoActivity.class), MODIFY);
+
+        switch (i) {
+
+            case 0: {
+
+
+                if (hasStore()) {
+                    //进入我的额店铺//
+
+                } else {
+                    //提示申请店铺
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.out.println("确认");
+                            MainActivity.selectFragement(0,"store");
+                        }
+                    }).setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.out.println("以后再说");
+                        }
+                    }).setMessage("暂时没有店铺，现在去申请？").create().show();
+
+                }
+
+                break;
+            }
+            case 1: {
+                break;
+            }
+            case 2: {
+                startActivityForResult(new Intent(getActivity(), ModifyInfoActivity.class), MODIFY);
+                break;
+            }
         }
+
 
     }
 
@@ -135,7 +174,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
     public void hasLogined() {
         login.setBackgroundColor(Color.RED);
         login.setText("退出");
-        imageView.setImageUrl(sharedPreferences.getString("userheader",null),new ImageLoader(Volley.newRequestQueue(getContext()),LruImageCache.instance()));
+        imageView.setImageUrl(sharedPreferences.getString("userheader", null), new ImageLoader(Volley.newRequestQueue(getContext()), LruImageCache.instance()));
         list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -151,4 +190,21 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
             infoSetting.setOnItemClickListener(this);
         }
     }
+
+    public boolean hasStore() {
+
+
+        String storeNum = sharedPreferences.getString("store", null);
+
+
+        if (storeNum.equals("0")) {
+            System.out.println("没有商店");
+            return false;
+        }
+        return true;
+
+    }
+
+
+
 }
