@@ -27,6 +27,15 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.ScaleAnimation;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeAddress;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.superschool.R;
 import com.superschool.map.MMap;
 import com.superschool.tools.BaseFragment;
@@ -35,7 +44,7 @@ import com.superschool.tools.BaseFragment;
  * Created by xiaohao on 17-10-16.
  */
 
-public class FrameOne extends Fragment implements AMapLocationListener {
+public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnMarkerDragListener, GeocodeSearch.OnGeocodeSearchListener {
     private static final String TAG = FrameOne.class.getSimpleName();
 
     private static View view;
@@ -44,6 +53,8 @@ public class FrameOne extends Fragment implements AMapLocationListener {
     Bundle instanceState;
     static double lat;
     static double lon;
+    private static GeocodeSearch geocodeSearch;
+    static Marker pickMarker;
 
     @Nullable
     @Override
@@ -68,6 +79,11 @@ public class FrameOne extends Fragment implements AMapLocationListener {
         map.getMyLocation(this);
 
         aMap.setMyLocationEnabled(true);
+        aMap.setOnMapClickListener(this);
+        aMap.setOnMarkerClickListener(this);
+        aMap.setOnMarkerDragListener(this);
+        geocodeSearch = new GeocodeSearch(getContext());
+        geocodeSearch.setOnGeocodeSearchListener(this);
 
     }
 
@@ -76,13 +92,10 @@ public class FrameOne extends Fragment implements AMapLocationListener {
         if (aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
 
-                  lat=aMapLocation.getLatitude();
-                  lon=aMapLocation.getLongitude();
+                lat = aMapLocation.getLatitude();
+                lon = aMapLocation.getLongitude();
 
 
-     /*           System.out.println(aMapLocation.getAddress());
-                System.out.println("纬度：" + aMapLocation.getLatitude());
-                System.out.println("精度：" + aMapLocation.getLongitude());*/
             }
         }
     }
@@ -121,21 +134,78 @@ public class FrameOne extends Fragment implements AMapLocationListener {
         map.onSaveInstanceState(outState);
     }
 
-    public static void pickPos(){
-
-
+    public static void pickPos() {
         System.out.println("选择位置");
-        MarkerOptions options=new MarkerOptions();
+        MarkerOptions options = new MarkerOptions();
         options.draggable(true);
-        LatLng latLng=new LatLng(lat,lon);
-        Marker marker=aMap.addMarker(options.position(latLng));
-        Animation animation=new ScaleAnimation(3.0f,3.0f,1.0f,1.0f);
+        LatLng latLng = new LatLng(lat, lon);
+        pickMarker = aMap.addMarker(options.position(latLng));
+        pickMarker.setInfoWindowEnable(true);
+        Animation animation = new ScaleAnimation(3.0f, 3.0f, 1.0f, 1.0f);
         animation.setDuration(5000);
         animation.setInterpolator(new LinearInterpolator());
-        marker.setAnimation(animation);
-        marker.startAnimation();
-
+        pickMarker.setAnimation(animation);
+        pickMarker.startAnimation();
     }
 
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        System.out.println("marker 点击事件");
+
+
+        return false;
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+        System.out.println("marker 开始拖拽");
+
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+        System.out.println("drag");
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
+        System.out.println("stop drag");
+        System.out.println(marker.getPosition());
+
+        LatLng latLng = marker.getPosition();
+        LatLonPoint latLonPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 500f, GeocodeSearch.AMAP);
+        geocodeSearch.getFromLocationAsyn(query);
+
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
+        String formatAddress = regeocodeAddress.getFormatAddress();
+        pickMarker.setTitle("hello");
+        pickMarker.setSnippet("查询经纬度对应详细地址：" + formatAddress);
+
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+        System.out.println("map click");
+        if (pickMarker.isInfoWindowShown()) {
+            System.out.println("map click  1");
+            pickMarker.hideInfoWindow();
+        }
+    }
 }
