@@ -41,7 +41,7 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        System.out.println("------------------oncreate");
+
         view = inflater.inflate(R.layout.f3_layout, container, false);
 
         initView();
