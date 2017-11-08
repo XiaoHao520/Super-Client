@@ -1,5 +1,6 @@
 package com.superschool.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.superschool.R;
 import com.superschool.activity.ConversationActivity;
 import com.superschool.adapter.ConversationListAdapter;
+import com.superschool.entity.ConversationRecording;
+import com.superschool.tools.Time;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,37 +31,47 @@ import java.util.Map;
  */
 
 public class FrameThree extends Fragment implements AdapterView.OnItemClickListener {
-
-
     View view;
     private static ListView conversationList;
     private static List<Map<String, String>> data;
     private static final int CONVERSATION = 404;
     private static ConversationListAdapter adapter;
+    private static int dataSize=0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         System.out.println("------------------oncreate");
         view = inflater.inflate(R.layout.f3_layout, container, false);
+
         initView();
         return view;
     }
 
+    public static void initData(List<Map<String,String>>list) {
+
+         data=list;
+
+    }
+
     @Override
     public void onStart() {
-        System.out.println("---------------onstart");
         super.onStart();
-
-
     }
 
     private void initView() {
         conversationList = (ListView) view.findViewById(R.id.conversationList);
-        data = new ArrayList<Map<String, String>>();
+
+       if(data==null)
+       {
+           data = new ArrayList<Map<String, String>>();
+       }
+
         adapter = new ConversationListAdapter(data, getActivity());
         conversationList.setAdapter(adapter);
         conversationList.setOnItemClickListener(this);
+
+
     }
 
 
@@ -120,5 +134,38 @@ public class FrameThree extends Fragment implements AdapterView.OnItemClickListe
         adapter.notifyDataSetChanged();
 
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+
+
+
+/*
+
+        List<ConversationRecording> current = recording.where("localUser=? and chatUser=?",
+                localUser, returnUsername).find(ConversationRecording.class);
+        if (current != null) {
+            recording.deleteAll(ConversationRecording.class, "localUser=? and chatUser=?", localUser, returnUsername);
+        }
+        recording.setLocalUser(localUser);
+        recording.setChatUser(returnUsername);
+        recording.setNickname(returnNickname);
+        recording.setDate(Time.getNow());
+        recording.setHeader(userHeader);
+
+
+        if (recording.save()) {
+            Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_LONG).show();
+            System.out.println("保存成功");
+        } else {
+            Toast.makeText(getApplicationContext(), "保存失败", Toast.LENGTH_LONG).show();
+            System.out.println("保存失败");
+        }
+*/
+
     }
 }
