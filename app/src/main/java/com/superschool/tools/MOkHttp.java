@@ -28,8 +28,6 @@ public class MOkHttp {
     }
 
     public String register(User user, String url) {
-
-        System.out.println(" eddddddddddddddddddddddddddddddddddd" + user.getUserHeader());
         RequestBody body = new FormBody.Builder()
                 .add("username", user.getUsername())
                 .add("email", user.getUserEmail())
@@ -152,27 +150,28 @@ public class MOkHttp {
 
 
     }
-    public void addStoreHistory(String store,String url){
 
-        RequestBody body=new FormBody.Builder().add("store",store).build();
-        Request request=new Request.Builder().url(url).post(body).build();
-        Call call=okHttpClient.newCall(request);
+    public void addStoreHistory(String store, String url) {
+
+        RequestBody body = new FormBody.Builder().add("store", store).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
         try {
-            Response rs=call.execute();
+            Response rs = call.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public JSONArray getStoreHistory(String holder,String url){
-        RequestBody body=new FormBody.Builder().add("holder",holder).build();
-        Request request=new Request.Builder().url(url).post(body).build();
-        Call call=okHttpClient.newCall(request);
+    public JSONArray getStoreHistory(String holder, String url) {
+        RequestBody body = new FormBody.Builder().add("holder", holder).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
         try {
-            Response response=call.execute();
-            String rs=response.body().string();
-            JSONArray array= JSON.parseArray(rs);
-         return array;
+            Response response = call.execute();
+            String rs = response.body().string();
+            JSONArray array = JSON.parseArray(rs);
+            return array;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,7 +180,6 @@ public class MOkHttp {
         return null;
 
     }
-
 
 
 }

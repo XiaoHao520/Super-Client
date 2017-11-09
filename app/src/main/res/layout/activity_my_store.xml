@@ -3,39 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:orientation="vertical"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:orientation="vertical"
     tools:context="com.superschool.activity.MyStoreActivity">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120px"
-        android:background="@color/colorAccent">
+        android:layout_height="180px"
+        android:background="@color/colorAccent"
+        android:paddingLeft="30px"
+        android:paddingRight="30px">
 
         <TextView
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="返回" />
 
-         <TextView
+        <TextView
 
-             android:layout_centerInParent="true"
-             android:textSize="20dp"
-             android:text="我的小生意"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的小生意"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/newStore"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="0px"
+            android:text="+"
+            android:textSize="100px" />
     </RelativeLayout>
 
     <ListView
         android:id="@+id/storelist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="30px"
+        android:paddingRight="30px"></ListView>
 
-
-    </ListView>
 
 </LinearLayout>

@@ -57,7 +57,7 @@ public class StoreListAdapter extends BaseAdapter {
         final JSONObject json = data.get(position);
         storename.setText(json.get("store_name").toString());
 
-        del.setOnClickListener(new View.OnClickListener() {
+       del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 data.remove(position);
