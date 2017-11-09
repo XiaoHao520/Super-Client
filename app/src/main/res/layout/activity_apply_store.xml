@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="30px"
+    android:paddingRight="30px"
+    android:paddingTop="50dp"
+    tools:context="com.superschool.activity.ApplyStoreActivity">
+
+    <EditText
+        android:id="@+id/storename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="店铺名"
+
+        />
+
+    <EditText
+        android:id="@+id/describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:hint="店铺描述" />
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50px"
+        android:paddingBottom="100px">
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spninner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+            </android.support.v7.widget.AppCompatSpinner>
+
+
+            <TextView
+                android:paddingTop="100px"
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ensure"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="100px"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:hint="常驻地址:xxxxxxxxxxxxxxxxxxxxxxxx"
+                android:minHeight="100px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:textSize="20dp" />
+
+
+            <Button
+                android:id="@+id/ensure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px"
+                android:background="#0db70d"
+                android:text="开通"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px"
+                android:background="#f10000"
+                android:text="返回"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

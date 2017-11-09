@@ -1,6 +1,8 @@
 package com.superschool.fragments;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Environment;
 
@@ -44,7 +46,7 @@ import com.superschool.tools.BaseFragment;
  * Created by xiaohao on 17-10-16.
  */
 
-public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnMarkerDragListener, GeocodeSearch.OnGeocodeSearchListener {
+public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener, AMapLocationListener, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnMarkerDragListener, GeocodeSearch.OnGeocodeSearchListener {
     private static final String TAG = FrameOne.class.getSimpleName();
 
     private static View view;
@@ -82,6 +84,7 @@ public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnM
         aMap.setOnMapClickListener(this);
         aMap.setOnMarkerClickListener(this);
         aMap.setOnMarkerDragListener(this);
+        aMap.setOnInfoWindowClickListener(this);
         geocodeSearch = new GeocodeSearch(getContext());
         geocodeSearch.setOnGeocodeSearchListener(this);
 
@@ -152,7 +155,11 @@ public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnM
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        System.out.println("marker 点击事件");
+        if (pickMarker.isInfoWindowShown()) {
+            pickMarker.hideInfoWindow();
+        } else {
+            pickMarker.showInfoWindow();
+        }
 
 
         return false;
@@ -175,8 +182,6 @@ public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnM
     @Override
     public void onMarkerDragEnd(Marker marker) {
 
-        System.out.println("stop drag");
-        System.out.println(marker.getPosition());
 
         LatLng latLng = marker.getPosition();
         LatLonPoint latLonPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
@@ -189,8 +194,8 @@ public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnM
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
         RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
         String formatAddress = regeocodeAddress.getFormatAddress();
-        pickMarker.setTitle("hello");
-        pickMarker.setSnippet("查询经纬度对应详细地址：" + formatAddress);
+        pickMarker.setTitle("您选择地址为:");
+        pickMarker.setSnippet("当前地址：" + formatAddress + "\n");
 
     }
 
@@ -201,11 +206,31 @@ public class FrameOne extends Fragment implements AMapLocationListener, AMap.OnM
 
     @Override
     public void onMapClick(LatLng latLng) {
-
         System.out.println("map click");
         if (pickMarker.isInfoWindowShown()) {
             System.out.println("map click  1");
             pickMarker.hideInfoWindow();
         }
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        if (marker.getTitle().equals("您选择地址为:")) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("是否将该位置标记为店铺常地址？").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create().show();
+        }
+
+
     }
 }
