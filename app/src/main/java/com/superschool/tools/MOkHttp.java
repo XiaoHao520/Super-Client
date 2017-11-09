@@ -1,6 +1,10 @@
 package com.superschool.tools;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.superschool.entity.Note;
+import com.superschool.entity.Store;
 import com.superschool.entity.User;
 
 import java.io.IOException;
@@ -25,7 +29,7 @@ public class MOkHttp {
 
     public String register(User user, String url) {
 
-        System.out.println(" eddddddddddddddddddddddddddddddddddd"+user.getUserHeader());
+        System.out.println(" eddddddddddddddddddddddddddddddddddd" + user.getUserHeader());
         RequestBody body = new FormBody.Builder()
                 .add("username", user.getUsername())
                 .add("email", user.getUserEmail())
@@ -93,13 +97,13 @@ public class MOkHttp {
 
     }
 
-    public void like(String url,String myUsername, String noteUser, String noteId) {
+    public void like(String url, String myUsername, String noteUser, String noteId) {
         RequestBody body = new FormBody.Builder().add("from", myUsername)
                 .add("to", noteUser).add("noteid", noteId).build();
-        Request request=new Request.Builder().url(url).post(body).build();
-        Call call=okHttpClient.newCall(request);
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
         try {
-            Response response=call.execute();
+            Response response = call.execute();
             System.out.println(response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,4 +111,77 @@ public class MOkHttp {
 
 
     }
+
+    public String applyStore(Store store, String url) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", store.getStoreHolder())
+                .add("storename", store.getStoreName())
+                .add("storeDsc", store.getStoreDsc())
+                .add("storeholder", store.getStoreHolder())
+                .add("storeaddress", store.getStoreAddress())
+                .add("lat", store.getLat())
+                .add("lon", store.getLon())
+                .add("type", store.getType())
+                .add("school", store.getSchool()).build();
+
+
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            return (response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void delStore(String store, String url) {
+
+        System.out.println(store);
+        RequestBody body = new FormBody.Builder().add("store", store).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response rs = call.execute();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void addStoreHistory(String store,String url){
+
+        RequestBody body=new FormBody.Builder().add("store",store).build();
+        Request request=new Request.Builder().url(url).post(body).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            Response rs=call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONArray getStoreHistory(String holder,String url){
+        RequestBody body=new FormBody.Builder().add("holder",holder).build();
+        Request request=new Request.Builder().url(url).post(body).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            Response response=call.execute();
+            String rs=response.body().string();
+            JSONArray array= JSON.parseArray(rs);
+         return array;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+
+
 }

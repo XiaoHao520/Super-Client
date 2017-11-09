@@ -27,6 +27,7 @@ import com.superschool.MainActivity;
 import com.superschool.R;
 import com.superschool.activity.LoginActivity;
 import com.superschool.activity.ModifyInfoActivity;
+import com.superschool.activity.MyStoreActivity;
 import com.superschool.activity.RegisterActivity;
 import com.superschool.tools.LruImageCache;
 import com.superschool.tools.MImageLoader;
@@ -46,7 +47,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
 
     private Button login;
     private ListView infoSetting;
-    String[] items = new String[]{"店铺", "订单管理", "修改资料"};
+    String[] items = new String[]{"小生意", "订单管理", "修改资料"};
     View view;
     SharedPreferences sharedPreferences;
     private TextView nickname;
@@ -112,10 +113,11 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
 
             case 0: {
 
-
                 if (hasStore()) {
                     //进入我的额店铺//
-
+                    Intent intent = new Intent(getActivity(), MyStoreActivity.class);
+                    intent.putExtra("holder", sharedPreferences.getString("username", null));
+                    startActivity(intent);
                 } else {
                     //提示申请店铺
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -123,7 +125,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             System.out.println("确认");
-                            MainActivity.selectFragement(0,"store");
+                            MainActivity.selectFragement(0, "store");
                         }
                     }).setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
                         @Override
@@ -204,7 +206,6 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
         return true;
 
     }
-
 
 
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         >
+
+        <ImageView
+            android:id="@+id/storeImg"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_alignParentStart="true"
+            android:padding="20px"
+            android:src="@drawable/add" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:layout_marginLeft="30dp"
+            android:layout_toEndOf="@id/storeImg"
+          >
+
+            <TextView
+                android:textColor="#000"
+
+                android:id="@+id/storename"
+                android:paddingTop="30px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textSize="30dp" />
+
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="30px"
+                android:text="历史访问人数："
+                />
+            <TextView
+                android:textColor="#000"
+
+                android:id="@+id/nums"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@id/customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+            <Button
+                android:id="@+id/del"
+                android:textColor="#fff"
+                android:text="删除生意"
+                android:layout_alignParentEnd="true"
+                android:background="#a00"
+                android:layout_width="300px"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

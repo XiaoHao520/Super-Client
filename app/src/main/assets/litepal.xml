@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="school"></dbname>
-    <version value="3"></version>
+    <version value="4"></version>
 
     <list>
+        <mapping class="com.superschool.entity.Store" />
         <mapping class="com.superschool.entity.ConversationRecording"></mapping>
     </list>
 </litepal>

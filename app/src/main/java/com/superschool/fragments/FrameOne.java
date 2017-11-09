@@ -3,6 +3,7 @@ package com.superschool.fragments;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 
@@ -39,6 +40,7 @@ import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.superschool.R;
+import com.superschool.activity.ApplyStoreActivity;
 import com.superschool.map.MMap;
 import com.superschool.tools.BaseFragment;
 
@@ -57,6 +59,8 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     static double lon;
     private static GeocodeSearch geocodeSearch;
     static Marker pickMarker;
+    private static final int APPLY = 256;
+    private String address;
 
     @Nullable
     @Override
@@ -94,11 +98,8 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
-
                 lat = aMapLocation.getLatitude();
                 lon = aMapLocation.getLongitude();
-
-
             }
         }
     }
@@ -197,6 +198,9 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         pickMarker.setTitle("您选择地址为:");
         pickMarker.setSnippet("当前地址：" + formatAddress + "\n");
 
+        address = formatAddress;
+
+
     }
 
     @Override
@@ -221,7 +225,11 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
             builder.setMessage("是否将该位置标记为店铺常地址？").setPositiveButton("是", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    Intent intent = new Intent(getActivity(), ApplyStoreActivity.class);
+                    intent.putExtra("address", address);
+                    intent.putExtra("lat", String.valueOf(lat));
+                    intent.putExtra("lon", String.valueOf(lon));
+                    startActivityForResult(intent, APPLY);
                 }
             }).setNegativeButton("否", new DialogInterface.OnClickListener() {
                 @Override
@@ -231,6 +239,18 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
             }).create().show();
         }
 
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if(requestCode==APPLY){
+            if(resultCode==982){
+                System.out.println("开通成功");
+            }
+        }
 
     }
 }

@@ -58,17 +58,16 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme.Base">
 
-        <!--               linux -->
-        <!--
-             <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="3c054522e623d4527bb06799412306a1" />
-        -->
-        <!--          windows -->
+        <!-- linux -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
+            android:value="3c054522e623d4527bb06799412306a1" />
+        <!-- windows -->
+        <!--
+            <meta-data
+            android:name="com.amap.api.v2.apikey"
             android:value="804b08f8ee619fcb8fa71fbcf41bcbe8" />
-
+        -->
         <service android:name="com.amap.api.location.APSService" />
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -160,18 +159,18 @@
         <activity android:name=".webview.WebViewActivity" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:label="@string/title_activity_register" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.ModifyInfoActivity"></activity>
-        <activity android:name=".activity.ConversationActivity"></activity>
+        <activity android:name=".activity.ModifyInfoActivity" />
+        <activity android:name=".activity.ConversationActivity" />
         <activity android:name=".activity.ApplyStoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".activity.MyStoreActivity"></activity>
     </application>
 
 </manifest>

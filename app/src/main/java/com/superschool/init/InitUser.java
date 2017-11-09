@@ -51,6 +51,22 @@ public class InitUser {
                                     JSONArray obj = JSON.parseArray(ok.login(user, url));
                                     JSONObject json = JSONObject.parseObject(obj.get(0).toString());
                                     System.out.println(json.toString());
+                                    if(obj.size()>1){
+
+
+
+
+
+
+
+                                         System.out.println("---------------------------------------"+obj.get(1).toString());
+
+
+                                    }else {
+                                        System.out.println("obj是；"+obj.size());
+                                    }
+
+
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("username", json.get("username").toString());
                                     editor.putString("nickname", json.get("user_nickname").toString());
