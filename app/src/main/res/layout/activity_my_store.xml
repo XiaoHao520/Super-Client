@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180px"
-        android:background="@color/colorAccent"
+        android:background="@color/main"
         android:paddingLeft="30px"
         android:paddingRight="30px">
 

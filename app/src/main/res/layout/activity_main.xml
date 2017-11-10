@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context="com.superschool.MainActivity">
 
@@ -12,7 +13,6 @@
         android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
 
         <LinearLayout
             android:id="@+id/viewPagers"
@@ -29,11 +29,10 @@
 
 
             <LinearLayout
-                android:paddingBottom="20px"
                 android:layout_width="match_parent"
                 android:layout_height="150px"
-                android:background="#ec0000"
                 android:orientation="horizontal"
+                android:paddingBottom="20px"
                 android:paddingLeft="30px"
                 android:paddingRight="30px">
 
@@ -42,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#c12323"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -50,21 +48,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="#fff"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
+
+                            android:id="@+id/school"
                             android:layout_width="80px"
                             android:layout_height="80px"
-                            android:src="@drawable/schoolactived" />
+                            android:src="@drawable/mapactived" />
 
                         <TextView
 
+
+                            android:id="@+id/schoolText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="校园"
-                            android:textColor="#000" />
+                            />
 
 
                     </LinearLayout>
@@ -75,21 +76,22 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/note"
                             android:layout_width="80px"
                             android:layout_height="80px"
-                            android:src="@drawable/schoolactived" />
+                            android:src="@drawable/note" />
 
                         <TextView
 
+                            android:id="@+id/noteText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="校园"
-                            android:textColor="#000" />
+                            android:text="动态"
+                          />
                     </LinearLayout>
 
 
@@ -100,7 +102,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#c12323"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -108,22 +109,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="#fff"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:weightSum="1">
 
                         <ImageView
+                            android:id="@+id/chat"
+
                             android:layout_width="80px"
                             android:layout_height="80px"
-                            android:src="@drawable/schoolactived" />
+                            android:src="@drawable/chat" />
 
                         <TextView
 
+                            android:id="@+id/chatText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="校园"
-                            android:textColor="#000" />
+                            android:text="消息"
+                          />
                     </LinearLayout>
 
                     <LinearLayout
@@ -132,22 +135,23 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:weightSum="1">
 
                         <ImageView
+                            android:id="@+id/me"
                             android:layout_width="80px"
                             android:layout_height="80px"
-                            android:src="@drawable/schoolactived" />
+                            android:src="@drawable/me" />
 
                         <TextView
 
+                            android:id="@+id/meText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="校园"
-                            android:textColor="#000" />
+                            android:text="我"
+             />
                     </LinearLayout>
 
 

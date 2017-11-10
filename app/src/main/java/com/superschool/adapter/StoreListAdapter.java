@@ -1,6 +1,7 @@
 package com.superschool.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class StoreListAdapter extends BaseAdapter {
         store.setStoreName(json.get("store_name").toString());
         store.setStoreHolder(json.get("store_holder").toString());
         store.save();
+        del.setBackgroundColor(Color.RED);
        del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

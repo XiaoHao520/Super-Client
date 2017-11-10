@@ -1,23 +1,20 @@
 package com.superschool;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.superschool.activity.ConversationActivity;
 import com.superschool.adapter.FragmentAdapter;
 import com.superschool.customeview.MyViewpager;
 import com.superschool.entity.ConversationRecording;
@@ -35,13 +32,8 @@ import java.util.Map;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.CustomContent;
-import cn.jpush.im.android.api.content.TextContent;
-import cn.jpush.im.android.api.event.ConversationRefreshEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
-import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
-
-import static com.superschool.R.id.map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,9 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences shared;
     private static String localUser;
     ConversationRecording recording;
-
-
+    private ImageView school, me, chat, note;
+    private TextView schoolText, meText, chatText, noteText;
     private static List<Map<String, String>> data;
+    private Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -64,11 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        System.out.println("main ---------------onstart");
+        context = getApplicationContext();
         shared = getSharedPreferences("localUser", MODE_PRIVATE);
         localUser = shared.getString("username", null);
         data = new ArrayList<Map<String, String>>();
-
         initJM();
         InitUser initUser = new InitUser(this);
         initUser.login();//初始登录
@@ -79,11 +71,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStart() {
+        setButton();
 
-
-        // insertTest();
         super.onStart();
 
+    }
+
+
+    private void setButton() {
+        int i = vp.getCurrentItem();
+
+        switch (i) {
+            case 0: {
+                school.setImageResource(R.drawable.mapactived);
+                me.setImageResource(R.drawable.me);
+                note.setImageResource(R.drawable.note);
+                chat.setImageResource(R.drawable.chat);
+                schoolText.setTextColor(context.getColor(R.color.navactived));
+                noteText.setTextColor(context.getColor(R.color.nav));
+                meText.setTextColor(context.getColor(R.color.nav));
+                chatText.setTextColor(context.getColor(R.color.nav));
+                break;
+            }
+            case 1: {
+                school.setImageResource(R.drawable.map);
+                me.setImageResource(R.drawable.me);
+                note.setImageResource(R.drawable.noteactived);
+                chat.setImageResource(R.drawable.chat);
+                schoolText.setTextColor(context.getColor(R.color.nav));
+                noteText.setTextColor(context.getColor(R.color.navactived));
+                meText.setTextColor(context.getColor(R.color.nav));
+                chatText.setTextColor(context.getColor(R.color.nav));
+                break;
+            }
+            case 2: {
+                school.setImageResource(R.drawable.map);
+
+                note.setImageResource(R.drawable.note);
+                chat.setImageResource(R.drawable.chatactivied);
+                me.setImageResource(R.drawable.me);
+                schoolText.setTextColor(context.getColor(R.color.nav));
+                noteText.setTextColor(context.getColor(R.color.nav));
+                meText.setTextColor(context.getColor(R.color.nav));
+                chatText.setTextColor(context.getColor(R.color.navactived));
+                break;
+            }
+            case 3: {
+                school.setImageResource(R.drawable.map);
+                note.setImageResource(R.drawable.note);
+                chat.setImageResource(R.drawable.chat);
+                me.setImageResource(R.drawable.meactived);
+                schoolText.setTextColor(context.getColor(R.color.nav));
+                noteText.setTextColor(context.getColor(R.color.nav));
+                meText.setTextColor(context.getColor(R.color.navactived));
+                chatText.setTextColor(context.getColor(R.color.nav));
+                break;
+            }
+
+        }
     }
 
 
@@ -110,6 +155,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initView() {
+        me = (ImageView) findViewById(R.id.me);
+        note = (ImageView) findViewById(R.id.note);
+        school = (ImageView) findViewById(R.id.school);
+        chat = (ImageView) findViewById(R.id.chat);
+
+        meText = (TextView) findViewById(R.id.meText);
+        noteText = (TextView) findViewById(R.id.noteText);
+        schoolText = (TextView) findViewById(R.id.schoolText);
+        chatText = (TextView) findViewById(R.id.chatText);
         vp = (MyViewpager) findViewById(R.id.viewPager);
         f1 = (LinearLayout) findViewById(R.id.f1);
         f2 = (LinearLayout) findViewById(R.id.f2);
@@ -135,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentPagerAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
         vp.setAdapter(adapter);
 
-
     }
 
     @Override
@@ -157,6 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             vp.setCurrentItem(2);
         }
+        setButton();
+
     }
 
 
@@ -232,12 +287,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static void selectFragement(int i, String what) {
         vp.setCurrentItem(i);
-
-
         if (what.equals("store")) {
-
-            System.out.println("执行了没");
-
             FrameOne.pickPos();
         }
     }

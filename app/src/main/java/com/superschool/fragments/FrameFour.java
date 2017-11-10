@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
@@ -28,10 +27,8 @@ import com.superschool.R;
 import com.superschool.activity.LoginActivity;
 import com.superschool.activity.ModifyInfoActivity;
 import com.superschool.activity.MyStoreActivity;
-import com.superschool.activity.RegisterActivity;
 import com.superschool.entity.Store;
 import com.superschool.tools.LruImageCache;
-import com.superschool.tools.MImageLoader;
 
 import org.litepal.crud.DataSupport;
 
@@ -192,7 +189,14 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
         list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("icon", R.drawable.add);
+            if(i==0){
+                map.put("icon", R.drawable.store1);
+            }if(i==1){
+                map.put("icon",R.drawable.order);
+            }if(i==2){
+                map.put("icon",R.drawable.myinfo);
+            }
+
             map.put("value", items[i]);
             list.add(map);
 
@@ -218,7 +222,6 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
                 System.out.println("没有商店");
                 return false;
             }
-
 
         }
         return true;
