@@ -14,9 +14,7 @@ public class Store extends DataSupport{
     private String lon;
     private String type;
     private String storeHolder;
-
     private String school;
-
 
     public String getSchool() {
         return school;

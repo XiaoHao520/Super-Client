@@ -2,15 +2,24 @@ package com.superschool.fragments;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.view.menu.MenuAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +30,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -43,13 +58,13 @@ import com.superschool.R;
 import com.superschool.activity.ApplyStoreActivity;
 import com.superschool.map.MMap;
 import com.superschool.tools.BaseFragment;
+import com.superschool.tools.MOkHttp;
 
 /**
  * Created by xiaohao on 17-10-16.
  */
 
 public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener, AMapLocationListener, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnMarkerDragListener, GeocodeSearch.OnGeocodeSearchListener {
-    private static final String TAG = FrameOne.class.getSimpleName();
 
     private static View view;
     private MapView map;
@@ -62,13 +77,21 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     private static final int APPLY = 256;
     private String address;
 
+    private static String school;
+    private static SharedPreferences sharedPreferences;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         this.instanceState = savedInstanceState;
+        sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
+        school = sharedPreferences.getString("school", null);
+
+
         if (view == null) {
             view = inflater.inflate(R.layout.f1_layout, container, false);
             initView(savedInstanceState);
+            loadStore();
         }
         return view;
     }
@@ -83,7 +106,7 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         }
         MMap map = new MMap(getActivity());
         map.getMyLocation(this);
-
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         aMap.setMyLocationEnabled(true);
         aMap.setOnMapClickListener(this);
         aMap.setOnMarkerClickListener(this);
@@ -130,6 +153,7 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     @Override
     public void onStart() {
         super.onStart();
+
     }
 
     @Override
@@ -156,12 +180,17 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        if (pickMarker.isInfoWindowShown()) {
-            pickMarker.hideInfoWindow();
-        } else {
-            pickMarker.showInfoWindow();
-        }
 
+        if (pickMarker != null) {
+
+
+            if (pickMarker.isInfoWindowShown()) {
+                pickMarker.hideInfoWindow();
+            } else {
+                pickMarker.showInfoWindow();
+            }
+
+        }
 
         return false;
     }
@@ -197,7 +226,6 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         String formatAddress = regeocodeAddress.getFormatAddress();
         pickMarker.setTitle("您选择地址为:");
         pickMarker.setSnippet("当前地址：" + formatAddress + "\n");
-
         address = formatAddress;
 
 
@@ -211,14 +239,17 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     @Override
     public void onMapClick(LatLng latLng) {
         System.out.println("map click");
-        if (pickMarker.isInfoWindowShown()) {
-            System.out.println("map click  1");
-            pickMarker.hideInfoWindow();
+
+        if (pickMarker != null) {
+            if (pickMarker.isInfoWindowShown()) {
+                System.out.println("map click  1");
+                pickMarker.hideInfoWindow();
+            }
         }
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(final Marker marker) {
 
         if (marker.getTitle().equals("您选择地址为:")) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -227,8 +258,10 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(getActivity(), ApplyStoreActivity.class);
                     intent.putExtra("address", address);
-                    intent.putExtra("lat", String.valueOf(lat));
-                    intent.putExtra("lon", String.valueOf(lon));
+
+                    LatLng latLng = marker.getPosition();
+                    intent.putExtra("lat", String.valueOf(latLng.latitude));
+                    intent.putExtra("lon", String.valueOf(latLng.longitude));
                     startActivityForResult(intent, APPLY);
                 }
             }).setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -237,8 +270,9 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
                     dialog.dismiss();
                 }
             }).create().show();
+        }else {
+            //这里全部都是商店
         }
-
 
     }
 
@@ -246,11 +280,75 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
-        if(requestCode==APPLY){
-            if(resultCode==982){
+        if (requestCode == APPLY) {
+            if (resultCode == 982) {
                 System.out.println("开通成功");
             }
         }
 
+
     }
+
+    private void loadStore() {
+
+        Handler mHandler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                JSONArray array = (JSONArray) msg.obj;
+                Log.i("stores:", "handleMessage: " + array.toString());
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject json = JSON.parseObject(array.get(i).toString());
+                    if (json != null) {
+
+
+                        LatLng latlng = new LatLng(Double.parseDouble(json.get("store_lat").toString()), Double.parseDouble(json.get("store_lon").toString()));
+
+                        MarkerOptions option = new MarkerOptions();
+                        option.position(latlng).title(json.get("store_name").toString()).snippet(json.get("store_intro").toString());
+                        option.icon(BitmapDescriptorFactory.fromResource(R.drawable.store));
+                        Marker marker = aMap.addMarker(option);
+
+                    }
+
+
+                }
+
+
+                super.handleMessage(msg);
+            }
+        };
+
+        if (school != null) {
+
+            new Thread(new LoadFromServerThread(school, mHandler)).start();
+        }
+
+
+    }
+
+    class LoadFromServerThread implements Runnable {
+        String school;
+        private Handler handler;
+
+        public LoadFromServerThread(String school, Handler handler) {
+            this.school = school;
+            this.handler = handler;
+        }
+
+        @Override
+        public void run() {
+
+            String url = "http://www.sinbel.top/study/public/index.php/store/index/loadStore";
+            //okhttp
+
+            MOkHttp okHttp = new MOkHttp();
+            JSONArray array = okHttp.loadStore(school, url);
+            Message message = new Message();
+            message.obj = array;
+            handler.sendMessage(message);
+        }
+    }
+
+
 }

@@ -1,9 +1,11 @@
 package com.superschool.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +35,7 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
     private TextView newStore;
     private static final int APPLY = 549;
 
-
+    private static final int APLLY_NEW_STORE = 32;
     private static List<JSONObject> tempData;
     StoreListAdapter adapter;
 
@@ -43,7 +45,6 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_my_store);
         context = getApplicationContext();
         initView();
-
         initData();
 
 
@@ -66,6 +67,12 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
             public void handleMessage(Message msg) {
                 JSONArray array = (JSONArray) msg.obj;
 
+
+                if(array.size()!=0){
+
+
+
+
                 for (int i = 0; i < array.size(); i++) {
 
                     data.add(JSON.parseObject(array.get(i).toString()));
@@ -73,7 +80,7 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
 
                 adapter = new StoreListAdapter(data, context);
                 storeList.setAdapter(adapter);
-
+                }
                 super.handleMessage(msg);
             }
         };
@@ -84,8 +91,22 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if(newStore==v){
-            Intent intent=new Intent(this,ApplyStoreActivity.class);
-            startActivityForResult(intent,APPLY);
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setMessage("是否开通新的小生意").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                   MyStoreActivity.this.setResult(APLLY_NEW_STORE);
+
+                    MyStoreActivity.this.finish();
+
+
+                }
+            }).setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                     dialog.dismiss();
+                }
+            }).create().show();
         }
     }
 
@@ -115,49 +136,6 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void setData(JSONArray array) {
-
-
-        for (int i = 0; i < array.size(); i++) {
-            JSONObject json = JSONArray.parseObject(array.get(i).toString());
-            data.add(json);
-        }
-        tempData = data;
-        adapter = new StoreListAdapter(data, context);
-        storeList.setAdapter(adapter);
-    }
-
-
-   /* @Override
-    public void onBackPressed() {
-
-        final String url = "http://www.sinbel.top/study/public/index.php/store/index/del";
-        for (int i = 0; i < tempData.size(); i++) {
-
-            final JSONObject json = tempData.get(i);
-
-
-            for (int j = 0; j < data.size(); j++) {
-                JSONObject json2 = data.get(j);
-                if (json.get("store_name").equals(json2.get("store_name"))) {
-
-                } else {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MOkHttp ok = new MOkHttp();
-                            ok.delStore(json.get("store_name").toString(), url);
-
-                        }
-                    }).start();
-                }
-            }
-
-
-        }
-
-
-    }*/
 
     @Override
     protected void onRestart() {

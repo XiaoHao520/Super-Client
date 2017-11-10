@@ -29,8 +29,11 @@ import com.superschool.activity.LoginActivity;
 import com.superschool.activity.ModifyInfoActivity;
 import com.superschool.activity.MyStoreActivity;
 import com.superschool.activity.RegisterActivity;
+import com.superschool.entity.Store;
 import com.superschool.tools.LruImageCache;
 import com.superschool.tools.MImageLoader;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +60,8 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
     SharedPreferences.Editor editor;
     SimpleAdapter adapter;
     NetworkImageView imageView;
+    private static final int GO_TO_MY_STORE = 73;
+
 
     @Nullable
     @Override
@@ -117,7 +122,7 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
                     //进入我的额店铺//
                     Intent intent = new Intent(getActivity(), MyStoreActivity.class);
                     intent.putExtra("holder", sharedPreferences.getString("username", null));
-                    startActivity(intent);
+                    startActivityForResult(intent, GO_TO_MY_STORE);
                 } else {
                     //提示申请店铺
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -171,6 +176,13 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
                 hasLogined();
             }
         }
+        if (requestCode == GO_TO_MY_STORE) {
+            if (resultCode == 32) {
+                MainActivity.selectFragement(0, "store");
+            }
+        }
+
+
     }
 
     public void hasLogined() {
@@ -195,13 +207,19 @@ public class FrameFour extends Fragment implements View.OnClickListener, Adapter
 
     public boolean hasStore() {
 
+        String username = sharedPreferences.getString("username", null);
+        List<Store> storeList = DataSupport.where("storeHolder=?", username).find(Store.class);
 
-        String storeNum = sharedPreferences.getString("store", null);
+
+        if (storeList != null) {
+            if (storeList.size() == 0) {
 
 
-        if (storeNum.equals("0")) {
-            System.out.println("没有商店");
-            return false;
+                System.out.println("没有商店");
+                return false;
+            }
+
+
         }
         return true;
 
