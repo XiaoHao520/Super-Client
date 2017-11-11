@@ -217,13 +217,13 @@ public class FrameTwo extends Fragment {
 
     }
 
-    @Override
+/*    @Override
     public void onDestroy() {
         super.onDestroy();
         ((ViewGroup)web.getParent()).removeView(web);
         web.destroy();
         web=null;
-        System.out.println("main destory");
+        System.out.println("f2 destory");
 
-    }
+    }*/
 }

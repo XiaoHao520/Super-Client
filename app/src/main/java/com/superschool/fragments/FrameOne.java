@@ -56,9 +56,14 @@ import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.superschool.R;
 import com.superschool.activity.ApplyStoreActivity;
+import com.superschool.activity.StoreDetailActivity;
+import com.superschool.entity.Store;
 import com.superschool.map.MMap;
 import com.superschool.tools.BaseFragment;
 import com.superschool.tools.MOkHttp;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by xiaohao on 17-10-16.
@@ -76,19 +81,24 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     static Marker pickMarker;
     private static final int APPLY = 256;
     private String address;
-
     private static String school;
     private static SharedPreferences sharedPreferences;
+    private static Map<String, String> storeInfo;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         this.instanceState = savedInstanceState;
+
+
+
         sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
         school = sharedPreferences.getString("school", null);
-
+        storeInfo = new HashMap<String, String>();
 
         if (view == null) {
+
+            System.out.println("---------------------------------------------------------------------");
             view = inflater.inflate(R.layout.f1_layout, container, false);
             initView(savedInstanceState);
             loadStore();
@@ -100,7 +110,6 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     private void initView(Bundle savedInstanceState) {
         map = (MapView) view.findViewById(R.id.map);
         map.onCreate(savedInstanceState);
-
         if (aMap == null) {
             aMap = map.getMap();
         }
@@ -127,34 +136,6 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-
-        map.onPause();
-    }
-
-    @Override
-    public void onResume() {
-
-        System.out.println("onresume");
-        super.onResume();
-        map.onResume();
-
-    }
-
-    @Override
-    public void onDestroy() {
-        map.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -270,8 +251,25 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
                     dialog.dismiss();
                 }
             }).create().show();
-        }else {
+        } else {
             //这里全部都是商店
+            // String
+            JSONObject json = (JSONObject) marker.getObject();
+            String holder = json.getString("store_holder");
+            String dsc = json.getString("store_intro");
+            String store = json.getString("store_name");
+
+
+            if (json.get("store_business").toString().equals("打印")) {
+
+
+            } else {
+                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                intent.putExtra("store", store);
+                intent.putExtra("dsc", dsc);
+                intent.putExtra("holder", holder);
+                startActivity(intent);
+            }
         }
 
     }
@@ -303,12 +301,11 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
 
 
                         LatLng latlng = new LatLng(Double.parseDouble(json.get("store_lat").toString()), Double.parseDouble(json.get("store_lon").toString()));
-
                         MarkerOptions option = new MarkerOptions();
                         option.position(latlng).title(json.get("store_name").toString()).snippet(json.get("store_intro").toString());
                         option.icon(BitmapDescriptorFactory.fromResource(R.drawable.store));
                         Marker marker = aMap.addMarker(option);
-
+                        marker.setObject(json);
                     }
 
 
@@ -350,5 +347,50 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         }
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        map.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("onresume");
+
+
+    }
+
+    @Override
+    public void onStop() {
+
+        System.out.println("f1 onstop");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        view=null;
+        System.out.println("f1 ondestory");
+        aMap=null;
+        map.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+ /*   @Override
+    public void onDestroyView() {
+
+        System.out.println("f1 ondestoryview");
+        map.onDestroy();
+        super.onDestroyView();
+    }*/
 
 }

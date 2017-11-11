@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 chatText.setTextColor(context.getColor(R.color.nav));
                 break;
             }
-
         }
     }
 
@@ -292,4 +291,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    @Override
+    public void finish() {
+        moveTaskToBack(true);
+        super.finish();
+    }
 }

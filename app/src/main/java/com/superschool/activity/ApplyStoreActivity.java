@@ -113,13 +113,13 @@ public class ApplyStoreActivity extends AppCompatActivity implements View.OnClic
         }
         store.setSchool(school);
         if (storename == null || storeDsc == null) {
-            Toast.makeText(getApplicationContext(), "以上全部为为必填选项", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "以上全部为为必填选项", Toast.LENGTH_LONG).show();
             return;
         }
         store.setStoreDsc(storeDsc);
         store.setStoreName(storeName.getText().toString());
         if (spinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getApplicationContext(), "请选择业务", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "请选择业务", Toast.LENGTH_LONG).show();
             return;
         }
         store.setType(spinner.getSelectedItem().toString());

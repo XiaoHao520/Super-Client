@@ -164,13 +164,12 @@
         <activity android:name=".activity.ModifyInfoActivity" />
         <activity android:name=".activity.ConversationActivity" />
         <activity android:name=".activity.ApplyStoreActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".activity.MyStoreActivity"></activity>
+        <activity android:name=".activity.MyStoreActivity" />
+        <activity android:name=".activity.StoreDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -104,7 +104,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
     }
-
     @Override
     public void onClick(View v) {
         if (v == send) {
@@ -135,42 +134,54 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         if (username == null) {
             System.out.println("user is null");
         } else {
+
+
+            if(username.equals(localUser)){
+
+                System.out.println("can not talk to self");
+                return;
+
+            }
             JMessageClient.enterSingleConversation(username);
-
-            Conversation conversation = JMessageClient.getSingleConversation(username);
-            msgList = conversation.getAllMessage();
             int start = 0;
+            Conversation conversation = JMessageClient.getSingleConversation(username);
 
+             try {
+                 msgList = conversation.getAllMessage();
+             }catch (Exception ex){
+
+
+
+             }
+                if(msgList==null){
+                    data.add(from);
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
             if (msgList.size() == 0) {
                 data.add(from);
-
-
                 adapter.notifyDataSetChanged();
-
                 return;
             }
             if (msgList.size() > 10) {
                 start = msgList.size() - 10;
-
             }
             msgList = conversation.getMessagesFromOldest(start, 10);
+
+
+
             for (Message message : msgList) {
-
-
                 ContentType type = message.getContentType();
                 switch (type) {//现只有custom；
                     case custom: {
-
                         CustomContent content = (CustomContent) message.getContent();
                         if ("text".equals(content.getStringValue("type"))) {
-
                             Map<String, String> map = new HashMap<String, String>();
                             if (message.getFromUser().getUserName().equals(localUser)) {
                                 map.put("status", "m");
                             } else {
                                 map.put("status", "u");
                             }
-
                             map.put("from", message.getFromUser().getUserName());
                             map.put("content", content.getStringValue("content"));
                             map.put("date", content.getStringValue("date"));

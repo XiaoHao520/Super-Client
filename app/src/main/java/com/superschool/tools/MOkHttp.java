@@ -191,11 +191,28 @@ public class MOkHttp {
             String rs = response.body().string();
             JSONArray array = JSON.parseArray(rs);
 
-            System.out.println(":::::::::::::::::::::::::::::;;"+array);
+            System.out.println(":::::::::::::::::::::::::::::;;" + array);
             return array;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public JSONArray getUserInfo(String username, String url) {
+        RequestBody body = new FormBody.Builder().add("username", username).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call=okHttpClient.newCall(request);
+        try {
+            Response response=call.execute();
+            JSONArray array=JSON.parseArray(response.body().string());
+            return array;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         return null;
     }
 

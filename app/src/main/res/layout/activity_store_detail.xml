@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgmain"
+    android:orientation="vertical"
+    tools:context="com.superschool.activity.StoreDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navheight"
+        android:background="@color/main"
+        android:paddingLeft="@dimen/mainpadding"
+        android:paddingRight="@dimen/mainpadding">
+
+        <ImageView
+
+            android:id="@+id/back"
+            android:layout_width="100px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="联系商家"
+            android:textSize="@dimen/titletextsize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/mainpadding"
+        android:paddingRight="@dimen/mainpadding"
+        android:paddingTop="250px">
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:src="@drawable/store" />
+
+        <TextView
+
+            android:id="@+id/storename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="50px"
+            android:text="店铺名"
+            android:textColor="@color/maintextcolor"
+            android:textSize="@dimen/titletextsize" />
+
+        <TextView
+            android:id="@+id/storedsc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:text="店铺描述"
+            android:textColor="@color/maintextcolor" />
+
+        <Button
+            android:id="@+id/contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:background="@color/button"
+            android:text="立即沟通" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
