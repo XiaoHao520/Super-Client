@@ -62,6 +62,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private static String userHeader;
     List<Message> msgList;
     private static String localUser;
+    private static boolean isMe = false;
+    private static String msgTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +106,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
     }
+
     @Override
     public void onClick(View v) {
         if (v == send) {
+            msgTime=Time.getNow();
             Map<String, String> map = new HashMap<String, String>();
             map.put("status", "m");
             String content = input.getText().toString();
@@ -116,7 +120,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             data.add(map);
             map.put("type", "text");
             map.put("content", input.getText().toString());
-            map.put("date", Time.getNow());
+            map.put("date", msgTime);
+
             map.put("header", sharedPreferences.getString("userheader", null));
             map.put("nickname", sharedPreferences.getString("nickname", null));
             Message message = JMessageClient.createSingleCustomMessage(from.get("username"), map);
@@ -136,9 +141,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         } else {
 
 
-            if(username.equals(localUser)){
+            if (username.equals(localUser)) {
 
                 System.out.println("can not talk to self");
+                isMe = true;
                 return;
 
             }
@@ -146,18 +152,17 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             int start = 0;
             Conversation conversation = JMessageClient.getSingleConversation(username);
 
-             try {
-                 msgList = conversation.getAllMessage();
-             }catch (Exception ex){
+            try {
+                msgList = conversation.getAllMessage();
+            } catch (Exception ex) {
 
 
-
-             }
-                if(msgList==null){
-                    data.add(from);
-                    adapter.notifyDataSetChanged();
-                    return;
-                }
+            }
+            if (msgList == null) {
+                data.add(from);
+                adapter.notifyDataSetChanged();
+                return;
+            }
             if (msgList.size() == 0) {
                 data.add(from);
                 adapter.notifyDataSetChanged();
@@ -169,11 +174,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             msgList = conversation.getMessagesFromOldest(start, 10);
 
 
-
             for (Message message : msgList) {
                 ContentType type = message.getContentType();
                 switch (type) {//现只有custom；
                     case custom: {
+
                         CustomContent content = (CustomContent) message.getContent();
                         if ("text".equals(content.getStringValue("type"))) {
                             Map<String, String> map = new HashMap<String, String>();
@@ -182,9 +187,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             } else {
                                 map.put("status", "u");
                             }
+                            msgTime=content.getStringValue("date");
                             map.put("from", message.getFromUser().getUserName());
                             map.put("content", content.getStringValue("content"));
-                            map.put("date", content.getStringValue("date"));
+                            map.put("date", msgTime);
                             map.put("header", content.getStringValue("header"));
                             map.put("nickname", content.getStringValue("nickname"));
                             map.put("username", content.getStringValue("username"));
@@ -201,16 +207,26 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     protected void onDestroy() {
+
+        System.out.println("f3 destory");
         super.onDestroy();
-        back();
+        if(!isMe){
+            back();
+        }
+
 
     }
 
 
     @Override
     public void onBackPressed() {
-        back();
-        super.onBackPressed();
+        if (isMe) {
+            this.finish();
+        } else {
+            back();
+        }
+
+
     }
 
     private void back() {
@@ -231,7 +247,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         recording.setLocalUser(localUser);
         recording.setChatUser(returnUsername);
         recording.setNickname(returnNickname);
-        recording.setDate(Time.getNow());
+        recording.setDate(msgTime);
         recording.setHeader(userHeader);
         recording.setStatus(map.get("status"));
         recording.setLast(map.get("content"));

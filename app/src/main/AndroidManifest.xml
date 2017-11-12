@@ -59,15 +59,16 @@
         android:theme="@style/AppTheme.Base">
 
         <!-- linux -->
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="3c054522e623d4527bb06799412306a1" />
-        <!-- windows -->
         <!--
             <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="804b08f8ee619fcb8fa71fbcf41bcbe8" />
+            android:value="3c054522e623d4527bb06799412306a1" />
         -->
+        <!-- windows -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="804b08f8ee619fcb8fa71fbcf41bcbe8" />
+
         <service android:name="com.amap.api.location.APSService" />
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -163,12 +164,15 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ModifyInfoActivity" />
         <activity android:name=".activity.ConversationActivity" />
-        <activity android:name=".activity.ApplyStoreActivity">
-
-        </activity>
+        <activity android:name=".activity.ApplyStoreActivity"></activity>
         <activity android:name=".activity.MyStoreActivity" />
-        <activity android:name=".activity.StoreDetailActivity">
+        <activity android:name=".activity.StoreDetailActivity"></activity>
+        <activity android:name=".activity.NoteDetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

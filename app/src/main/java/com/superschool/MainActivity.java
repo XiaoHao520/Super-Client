@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         InitUser initUser = new InitUser(this);
         initUser.login();//初始登录
         initView();
-        initData();
+       // initData();
     }
 
 
@@ -106,9 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case 2: {
                 school.setImageResource(R.drawable.map);
-
                 note.setImageResource(R.drawable.note);
-                chat.setImageResource(R.drawable.chatactivied);
+                chat.setImageResource(R.drawable.chatactived);
                 me.setImageResource(R.drawable.me);
                 schoolText.setTextColor(context.getColor(R.color.nav));
                 noteText.setTextColor(context.getColor(R.color.nav));
@@ -276,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     map.put("status", recording.getStatus());
                     data.add(map);
                 }
-                FrameThree.initData(data);
+               // FrameThree.initData(data);
             }
 
 

@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
-
     >
 
 
@@ -18,7 +16,7 @@
             android:layout_width="300px"
             android:layout_height="300px"
             android:layout_centerInParent="true"
-            android:src="@drawable/user" />
+            android:src="@drawable/meactived" />
 
         <TextView
             android:id="@+id/nickname"
@@ -46,6 +44,7 @@
             android:divider="#fff"
             android:dividerHeight="10dp"></ListView>
         <Button
+            android:background="@drawable/btn_ok"
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

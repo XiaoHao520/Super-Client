@@ -1,5 +1,6 @@
 package com.superschool.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -45,14 +46,13 @@ public class StoreDetailActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_detail);
-     intent = getIntent();
+        intent = getIntent();
         store = intent.getStringExtra("store");
         storeDiscribe = intent.getStringExtra("dsc");
         storeHolder = intent.getStringExtra("holder");
-
-
         initView();
         initStoreHolderInfo();
+        System.out.println("____________________________________mystoredetail  oncreate");
 
 
     }
@@ -104,8 +104,8 @@ public class StoreDetailActivity extends AppCompatActivity implements View.OnCli
             data.put("header", json.get("user_header").toString());
             data.put("nickname", json.get("user_nickname").toString());
             data.put("username", json.get("username").toString());
-            data.put("content","咱谈一笔生意");
-            data.put("status","m");
+            data.put("content", "咱谈一笔生意");
+            data.put("status", "m");
             data.put("date", Time.getNow());
             Message message = new Message();
             message.obj = data;
@@ -117,8 +117,8 @@ public class StoreDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v == contact) {
-          Intent intent=new Intent(StoreDetailActivity.this,ConversationActivity.class);
-           intent.putExtra("data", (Serializable) storeInfo);
+            Intent intent = new Intent(StoreDetailActivity.this, ConversationActivity.class);
+            intent.putExtra("data", (Serializable) storeInfo);
             startActivity(intent);
         }
     }
@@ -140,5 +140,12 @@ public class StoreDetailActivity extends AppCompatActivity implements View.OnCli
 
         }
         return false;
+    }
+
+
+    @Override
+    protected void onPause() {
+        System.out.println("---------mystore-------onpause");
+        super.onPause();
     }
 }

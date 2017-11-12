@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgmain"
+    android:orientation="vertical"
+    tools:context="com.superschool.activity.NoteDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navheight"
+        android:background="@color/navactived"
+        android:paddingLeft="@dimen/mainpadding"
+        android:paddingRight="@dimen/mainpadding">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/back"
+            android:layout_height="@dimen/back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="正文"
+            android:textSize="@dimen/titletextsize" />
+
+        <ImageView
+            android:id="@+id/newComment"
+            android:layout_width="@dimen/back"
+            android:layout_height="@dimen/back"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/add"
+
+            />
+
+    </RelativeLayout>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200px">
+
+    </WebView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textColor="@color/maintextcolor" />
+
+        <ListView
+            android:id="@+id/commentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/bg"
+            android:dividerHeight="1px">
+
+
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

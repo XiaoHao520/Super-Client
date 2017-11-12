@@ -5,10 +5,14 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bg">#2b2b2c</color>
 
-    <color name="main">#d4237a</color>
+    <color name="main">#FF4081</color>
     <color name="nav">#515151</color>
-    <color name="navactived">#d4237a</color>
+    <color name="navactived">#FF4081</color>
     <color name="button">#04ab49</color>
     <color name="bgmain">#fff</color>
     <color name="maintextcolor">#000</color>
+    <color name="textbg">#515151</color>
+    <color name="pressed">#ffb9d1</color>
+    <color name="error">#ff0000</color>
+    <color name="errorpressed">#e17878</color>
 </resources>

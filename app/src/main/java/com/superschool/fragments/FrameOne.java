@@ -62,7 +62,11 @@ import com.superschool.map.MMap;
 import com.superschool.tools.BaseFragment;
 import com.superschool.tools.MOkHttp;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,6 +88,8 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
     private static String school;
     private static SharedPreferences sharedPreferences;
     private static Map<String, String> storeInfo;
+    private static String username;
+    private List<Marker> markerList;
 
     @Nullable
     @Override
@@ -91,14 +97,16 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
         this.instanceState = savedInstanceState;
 
 
+        System.out.println("----------------------------------------------");
 
         sharedPreferences = getActivity().getSharedPreferences("localUser", Context.MODE_PRIVATE);
         school = sharedPreferences.getString("school", null);
+        username = sharedPreferences.getString("username", null);
         storeInfo = new HashMap<String, String>();
+        markerList = new ArrayList<Marker>();
 
         if (view == null) {
 
-            System.out.println("---------------------------------------------------------------------");
             view = inflater.inflate(R.layout.f1_layout, container, false);
             initView(savedInstanceState);
             loadStore();
@@ -219,8 +227,14 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
 
     @Override
     public void onMapClick(LatLng latLng) {
-        System.out.println("map click");
 
+
+        System.out.println("-----------------------------");
+        if (markerList != null) {
+            for (Marker marker : markerList) {
+                marker.hideInfoWindow();
+            }
+        }
         if (pickMarker != null) {
             if (pickMarker.isInfoWindowShown()) {
                 System.out.println("map click  1");
@@ -231,7 +245,6 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
 
     @Override
     public void onInfoWindowClick(final Marker marker) {
-
         if (marker.getTitle().equals("您选择地址为:")) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("是否将该位置标记为店铺常地址？").setPositiveButton("是", new DialogInterface.OnClickListener() {
@@ -252,14 +265,10 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
                 }
             }).create().show();
         } else {
-            //这里全部都是商店
-            // String
             JSONObject json = (JSONObject) marker.getObject();
             String holder = json.getString("store_holder");
             String dsc = json.getString("store_intro");
             String store = json.getString("store_name");
-
-
             if (json.get("store_business").toString().equals("打印")) {
 
 
@@ -298,16 +307,27 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject json = JSON.parseObject(array.get(i).toString());
                     if (json != null) {
+                        String storeName = json.getString("store_name");
+                        System.out.println("store is exist:::" + DataSupport.isExist(Store.class, "storeName=?", storeName));
 
-
+                        if (!DataSupport.isExist(Store.class, "storeName=?", storeName)) {
+                            Store store = new Store();
+                            store.setStoreName(json.getString("store_name"));
+                            store.setStoreHolder(json.getString("store_holder"));
+                            if(store.save()){
+                                System.out.println("保存成功");
+                            }else {
+                                System.out.println("保存失败");
+                            }
+                        }
                         LatLng latlng = new LatLng(Double.parseDouble(json.get("store_lat").toString()), Double.parseDouble(json.get("store_lon").toString()));
                         MarkerOptions option = new MarkerOptions();
                         option.position(latlng).title(json.get("store_name").toString()).snippet(json.get("store_intro").toString());
                         option.icon(BitmapDescriptorFactory.fromResource(R.drawable.store));
                         Marker marker = aMap.addMarker(option);
                         marker.setObject(json);
+                        markerList.add(marker);
                     }
-
 
                 }
 
@@ -373,15 +393,17 @@ public class FrameOne extends Fragment implements AMap.OnInfoWindowClickListener
 
     @Override
     public void onDestroy() {
-        view=null;
+        view = null;
         System.out.println("f1 ondestory");
-        aMap=null;
+        aMap = null;
         map.onDestroy();
         super.onDestroy();
     }
 
     @Override
     public void onStart() {
+
+        map.onResume();
         super.onStart();
     }
 

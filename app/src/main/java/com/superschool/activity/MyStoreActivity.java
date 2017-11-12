@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
     static JSONObject json;
     private static Context context;
     private ListView storeList;
-    private TextView newStore;
+    private ImageView newStore;
     private static final int APPLY = 549;
 
     private static final int APLLY_NEW_STORE = 32;
@@ -52,7 +53,7 @@ public class MyStoreActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initView() {
         storeList = (ListView) findViewById(R.id.storelist);
-        newStore = (TextView) findViewById(R.id.newStore);
+        newStore = (ImageView) findViewById(R.id.newStore);
         newStore.setOnClickListener(this);
 
     }

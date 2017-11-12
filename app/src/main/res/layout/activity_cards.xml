@@ -3,39 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgmain"
     tools:context="com.superschool.activity.CardsActivity">
 
     <RelativeLayout
-        android:paddingLeft="15px"
-        android:paddingRight="15px"
+
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="150px"
-        android:background="@color/bg">
+        android:background="@color/navactived"
+        android:paddingLeft="15px"
+        android:paddingRight="15px">
 
-        <TextView
+        <ImageView
 
-            android:layout_width="wrap_content"
+
+            android:layout_width="@dimen/back"
             android:layout_height="wrap_content"
-            android:text="返回"
-            android:layout_alignTop="@+id/textView"
+            android:src="@drawable/back"
+
 
             />
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="发表"
-            android:id="@+id/textView" />
+            android:textSize="@dimen/titletextsize" />
 
         <TextView
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发送"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:text="发送" />
     </RelativeLayout>
 
     <EditText

@@ -182,7 +182,6 @@ public class MOkHttp {
     }
 
     public JSONArray loadStore(String school, String url) {
-
         RequestBody body = new FormBody.Builder().add("school", school).build();
         Request request = new Request.Builder().url(url).post(body).build();
         Call call = okHttpClient.newCall(request);
@@ -211,8 +210,6 @@ public class MOkHttp {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
 
