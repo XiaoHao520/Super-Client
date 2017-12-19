@@ -201,16 +201,29 @@ public class MOkHttp {
     public JSONArray getUserInfo(String username, String url) {
         RequestBody body = new FormBody.Builder().add("username", username).build();
         Request request = new Request.Builder().url(url).post(body).build();
-        Call call=okHttpClient.newCall(request);
+        Call call = okHttpClient.newCall(request);
         try {
-            Response response=call.execute();
-            JSONArray array=JSON.parseArray(response.body().string());
+            Response response = call.execute();
+            JSONArray array = JSON.parseArray(response.body().string());
             return array;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void sendComment(String userId, String noteId, String content, String url) {
+        RequestBody body = new FormBody.Builder().add("comment_user_id", userId).add("note_id", noteId).add("comment_date",Time.getNow()).add("comment_content", content).build();
+        Request request = new Request.Builder().post(body).url(url).build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

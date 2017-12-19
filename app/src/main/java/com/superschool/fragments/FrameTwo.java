@@ -38,6 +38,7 @@ import java.util.Map;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.superschool.activity.CardsActivity;
+import com.superschool.activity.NoteDetailActivity;
 import com.superschool.entity.Note;
 import com.superschool.tools.FileUpload;
 import com.superschool.tools.LruImageCache;
@@ -100,6 +101,18 @@ public class FrameTwo extends Fragment {
 
 
         }
+
+        @JavascriptInterface
+
+        public void startNoteDetailActivity(String noteId){
+
+            System.out.println(noteId);
+
+            Intent intent=new Intent(getContext(), NoteDetailActivity.class);
+            intent.putExtra("noteId",noteId);
+            startActivity(intent);
+        }
+
 
         @JavascriptInterface
         public void likeClick(final String noteId, final String noteUser) {

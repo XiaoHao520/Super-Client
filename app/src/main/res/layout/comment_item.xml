@@ -17,7 +17,6 @@
             android:id="@+id/header"
             android:layout_width="200px"
             android:layout_height="200px"
-
             android:padding="20px"
             android:src="@drawable/user" />
 
@@ -50,7 +49,6 @@
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50px"
                 android:text="2017-10-10 10:20:20"
